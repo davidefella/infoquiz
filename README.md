@@ -108,7 +108,7 @@ Il progetto InfoQuiz è organizzato nelle seguenti cartelle e file principali:
 - **`pom.xml`**: File di configurazione Maven per la gestione delle dipendenze e la configurazione del build.
 
 # Roadmap
-Per vedere quali attività sono attualmente in lavorazione e quali sono pianificate per il futuro, visita la sezione [Projects](https://github.com/tuo-nome-utente/infoquiz/projects) del nostro repository su GitHub. Qui troverai una lista aggiornata delle task aperte, in lavorazione e completate, insieme a dettagli sulle priorità e sugli obiettivi a lungo termine del progetto.
+Per vedere quali attività sono attualmente in lavorazione e quali sono pianificate per il futuro, visita la sezione [Projects](https://github.com/users/davidefella/projects/6) del nostro repository su GitHub. Qui troverai una lista aggiornata delle task aperte, in lavorazione e completate, insieme a dettagli sulle priorità e sugli obiettivi a lungo termine del progetto.
 
 Siamo sempre alla ricerca di feedback e contributi da parte della comunità, quindi se hai idee o suggerimenti su come migliorare InfoQuiz, sentiti libero di partecipare alle discussioni o creare una nuova issue.
 
