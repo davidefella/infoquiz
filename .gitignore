@@ -1,0 +1,76 @@
+# Compiled class file
+*.class
+
+# Log files
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+replay_pid*
+
+# Maven specific files
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# Eclipse specific files
+.settings/
+bin/
+tmp/
+*.swp
+.metadata
+recommenders/
+.apt_generated/
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.vscode/
+
+# IDEA specific files
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Node specific files (if using frontend with Node)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Spring Boot specific files
+spring.log
+
+# Additional files
+.mvn/
+.mvnw
+.mvnw.cmd
+*.bak
+*.tmp
+*.orig
+/mvnw
+/mvnw.cmd
