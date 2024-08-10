@@ -9,6 +9,9 @@ echo "Directory del progetto: $PROJECT_DIR"
 # Vai alla directory del progetto
 cd "$PROJECT_DIR" || exit
 
+# Rimuovi tutti i file JAR esistenti nella cartella dist
+rm -f "$PROJECT_DIR/dist"/*.jar
+
 # Esegui il comando Maven clean package
 ./mvnw clean package
 
