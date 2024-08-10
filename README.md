@@ -37,6 +37,10 @@ La logica del punteggio include l'assegnazione di bonus per le risposte corrette
 
 I risultati del quiz vengono memorizzati nel database per una successiva analisi. Il progetto è configurabile tramite file di proprietà, con la possibilità di impostare parametri come i punti bonus e i punti di penalità.
 
+Wiki con Roadmap: https://github.com/davidefella/infoquiz/wiki/Roadmap
+
+NOTA: il sistema al momento ha una gestione molto semplificata degli utenti per motivi di semplicità, esiste una sola tabella che memorizza "Nome e cognome" come fosse una sorta di anagrafica. Quando si inizia un quiz, l'applicazione controlla se quella coppia di stringhe esiste già, in caso negativo fa un salvataggio. 
+
 ## Stack tecnologico
 - Java 21 / Spring 3
 - JUnit
