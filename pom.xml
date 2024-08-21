@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.davidefella</groupId>
 	<artifactId>infoquiz</artifactId>
-	<version>1.0.1</version>
+	<version>1.1.0</version>
 	<packaging>jar</packaging>
 	<name>infoquiz</name>
 	<description>Infoquiz System: un&apos;applicazione web per creare, gestire e valutare quiz per studenti</description>
@@ -75,6 +75,14 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
+		<!-- Excel -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>5.3.0</version>
+		</dependency>
+
 
 		<!-- Utilities -->
 		<dependency>

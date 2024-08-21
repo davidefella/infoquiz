@@ -30,6 +30,10 @@ public class EvaluationPlayerService {
         return evaluationPlayerRepository.save(evaluationPlayer);
     }
 
+    public List<EvaluationPlayer> findByEvaluationId(Long evaluationId){
+        return evaluationPlayerRepository.findByEvaluationId(evaluationId);
+    }
+
     public void deleteById(Long id) {
         evaluationPlayerRepository.deleteById(id);
     }

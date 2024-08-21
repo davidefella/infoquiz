@@ -30,8 +30,7 @@ InfoQuiz è, nella sua versione attuale, una piccola demo sperimentale pensata p
 
 Siamo ancora nelle fasi iniziali dello sviluppo e ci sono molte idee entusiasmanti da implementare per migliorare e ampliare le funzionalità esistenti. Invitiamo chiunque sia interessato a contribuire con idee innovative o a partecipare allo sviluppo per rendere InfoQuiz una piattaforma ancora più completa e coinvolgente.
 
-Il sistema consente agli utenti di selezionare un test, rispondere alle domande e visualizzare i risultati alla fine del quiz. 
-Le domande del quiz vengono randomizzate.
+Il sistema consente agli utenti di selezionare un test, rispondere alle domande e visualizzare i risultati alla fine del quiz. Le domande del quiz vengono randomizzate, e i risultati possono essere esportati in un file Excel per una successiva analisi.
 
 La logica del punteggio include l'assegnazione di bonus per le risposte corrette, la detrazione di punti per le risposte errate e nessuna penalità per risposte non date.
 
@@ -93,7 +92,9 @@ Il progetto InfoQuiz è organizzato nelle seguenti cartelle e file principali:
     - **`controller`**: Include i controller Spring per gestire le richieste HTTP.
     - **`model`**: Contiene le classi di modello, divise in `persistence` per le entità JPA e `web` per i DTO utilizzati nelle interazioni web.
     - **`repository`**: Contiene le interfacce dei repository JPA per l'accesso al database.
-    - **`service`**: Include la logica di business dell'applicazione.
+    - **`service`**: Include la logica di business dell'applicazione
+      - **`business`**: Contiene la gestione delle operazioni di quiz e valutazione
+      - **`reportgenerators`**: Contiene le classi responsabili della generazione di report, incluso il report Excel dei risultati dei quiz.
     - **`utility`**: Contiene classi di utilità e configurazioni.
 
 - **`src/main/resources`**: Contiene risorse statiche e file di configurazione.
@@ -142,14 +143,17 @@ Ecco un esempio passo-passo su come utilizzare l'applicazione per completare un 
 5. **Visualizzazione dei Risultati**
   - La pagina dei risultati mostrerà il tuo punteggio finale e il numero di risposte corrette, errate e non date.
   - Se lo desideri, puoi tornare alla home page e completare un altro quiz.
-  - 
-6. **Nota sui Dati**
+
+6. **Esportazione dei Risultati**
+  - Dopo aver completato un quiz, gli amministratori possono accedere alla dashboard amministrativa e scaricare i risultati del quiz in formato Excel. Il file Excel contiene i dettagli dei partecipanti, le loro risposte e i punteggi ottenuti.
+
+7. **Nota sui Dati**
   - Al momento i risultati del quiz vengono memorizzati nel database H2 integrato, configurato in modalità in-memory.
     In questa modalità, i dati sono memorizzati solo nella RAM e vengono persi quando l'applicazione viene chiusa o riavviata.
 
 Questa guida ti offre una panoramica di base su come interagire con InfoQuiz. Se incontri problemi o hai suggerimenti per migliorare l'applicazione, non esitare a segnalare un issue o contribuire con una pull request!
 
-Screenshot dell'Applicazione
+Screenshot dell'applicazione
 
 Di seguito sono mostrati alcuni screenshot dell'applicazione InfoQuiz che illustrano le funzionalità principali e l'interfaccia utente.
 
@@ -188,6 +192,7 @@ Per la verifica del corretto funzionamento del codice utilizziamo **JUnit**.
 
 - **Test Unitari**: Sono scritti per verificare il corretto funzionamento di singole unità di codice, come metodi o classi.
 - **Test di Integrazione**: Assicurano che le diverse parti del sistema funzionino insieme come previsto.
+- **Test di Generazione Report**: Test specifici per verificare la corretta generazione dei report Excel contenenti i risultati dei quiz.
 
 ## Qualità del Codice
 
