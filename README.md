@@ -22,7 +22,7 @@
 
 ## Descrizione
 
-### Versione corrente: 1.0.0
+### Versione corrente: 1.1.0
 
 InfoQuiz è una webapp di quiz a punteggio progettato per valutare le conoscenze degli studenti.
 
