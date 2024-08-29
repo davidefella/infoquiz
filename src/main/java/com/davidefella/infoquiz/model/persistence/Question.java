@@ -1,5 +1,6 @@
 package com.davidefella.infoquiz.model.persistence;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * La singola domanda associata al quiz. Una domanda può essere associata
@@ -33,11 +35,13 @@ public class Question {
     private Evaluation evaluation;
 
     @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Answer> answers;
 
     public Question(String code, Evaluation evaluation, String questionText ) {
+        this.code = code;
         this.evaluation = evaluation;
         this.questionText = questionText;
-        this.code = code;
+
     }
 }

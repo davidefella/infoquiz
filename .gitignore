@@ -66,11 +66,8 @@ yarn-error.log
 spring.log
 
 # Additional files
-.mvn/
-.mvnw
-.mvnw.cmd
 *.bak
 *.tmp
 *.orig
-/mvnw
-/mvnw.cmd
+
+/dist/

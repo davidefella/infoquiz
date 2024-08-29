@@ -15,8 +15,12 @@ import java.util.Arrays;
 import java.util.List;
 
 /* Classe che produce dati di test e li salva nel database.
- * Utile per test e demo */
+ * Utile per test e demo
+ *
+ * */
+
 @Component
+@Deprecated
 public class DummyDataFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(StartupDataLoader.class);

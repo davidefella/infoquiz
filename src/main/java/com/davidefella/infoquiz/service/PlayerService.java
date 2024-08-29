@@ -26,9 +26,17 @@ public class PlayerService {
         return playerRepository.findById(id);
     }
 
-    public Optional<Player> findByFirstNameAndLastName(String firstName, String lastName) {
-        return playerRepository.findByFirstNameAndLastName(firstName, lastName);
+    public Optional<Player> findByLastNameAndFirstName(String lastName, String firstName) {
+        return playerRepository.findByLastNameAndFirstName(lastName, firstName);
     }
+
+    /*
+    * TODO: Add check fields
+    * */
+    public List<Player> saveAll(List<Player> players) {
+        return playerRepository.saveAll(players);
+    }
+
 
     public Player save(String firstName, String lastName) {
 
@@ -36,7 +44,7 @@ public class PlayerService {
             throw new IllegalArgumentException("First name and last name cannot be null");
         }
 
-        Player player = new Player(firstName, lastName);
+        Player player = new Player(lastName, firstName);
         return playerRepository.save(player);
     }
 

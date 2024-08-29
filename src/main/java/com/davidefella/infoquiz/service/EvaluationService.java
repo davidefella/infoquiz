@@ -34,12 +34,16 @@ public class EvaluationService {
         return evaluationRepository.findById(id);
     }
 
-    public Evaluation findByCode(String code) {
+    public Optional<Evaluation> findByCode(String code) {
         return evaluationRepository.findByCode(code);
     }
 
     public Evaluation save(Evaluation evaluation) {
         return evaluationRepository.save(evaluation);
+    }
+
+    public List<Evaluation> saveAll(List<Evaluation> evaluations) {
+        return evaluationRepository.saveAll(evaluations);
     }
 
     public List<Evaluation> findAllActiveEvaluations() {

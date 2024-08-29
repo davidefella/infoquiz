@@ -13,23 +13,23 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Table(uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"firstName", "lastName"})})
+        @UniqueConstraint(columnNames = {"lastName", "firstName"})})
 public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable=false)
-    @NotNull
-    private String firstName;
-
     @NotNull
     @Column(nullable=false)
     private String lastName;
 
-    public Player(String firstName, String lastName) {
-        this.firstName = firstName;
+    @Column(nullable=false)
+    @NotNull
+    private String firstName;
+
+    public Player(String lastName, String firstName) {
         this.lastName = lastName;
+        this.firstName = firstName;
     }
 }

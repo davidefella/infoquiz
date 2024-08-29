@@ -26,9 +26,18 @@ public class AnswerService {
         return answerRepository.findById(id);
     }
 
+    public Optional<Answer> findByCode(String code) {
+        return answerRepository.findByCode(code);
+    }
+
     public Answer save(Answer answer) {
         return answerRepository.save(answer);
     }
+
+    public List<Answer> saveAll(List<Answer> answers) {
+        return answerRepository.saveAll(answers);
+    }
+
 
     public void deleteById(Long id) {
         answerRepository.deleteById(id);

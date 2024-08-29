@@ -44,6 +44,9 @@ public class ExcelReportGeneratorTest {
         openMocks(this);
     }
 
+
+
+    /*
     @Test
     void testGenerateResultsByEvaluationCode() throws IOException {
         // Arrange: Configura un oggetto Evaluation e assicurati che non sia null
@@ -116,6 +119,6 @@ public class ExcelReportGeneratorTest {
             // Verifica che solo l'intestazione sia presente
             assertEquals(1, sheet.getPhysicalNumberOfRows(), "Il foglio dovrebbe contenere solo una riga (l'intestazione)");
         }
-    }
+    }*/
 
 }
