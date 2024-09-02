@@ -1,5 +1,7 @@
 package com.davidefella.infoquiz.model.persistence;
 
+import com.davidefella.infoquiz.model.persistence.users.Student;
+import com.davidefella.infoquiz.model.persistence.users.UserInfoQuiz;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,11 +34,11 @@ public class EvaluationStudent {
 
     @ManyToOne
     @JoinColumn(name = "student_id")
-    private Student student;
+    private UserInfoQuiz student;
 
     private double score;
 
-    public EvaluationStudent(Evaluation evaluation, Student student, double score) {
+    public EvaluationStudent(Evaluation evaluation, UserInfoQuiz student, double score) {
         this.evaluation = evaluation;
         this.student = student;
         this.score = score;

@@ -1,5 +1,6 @@
 package com.davidefella.infoquiz.model.persistence;
 
+import com.davidefella.infoquiz.model.persistence.users.Teacher;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,12 +27,16 @@ public class Evaluation {
     private String description;
     private boolean isActive;
 
-    public Evaluation( String code, LocalDate evaluationDate, String title, String description, boolean isActive) {
-        this.evaluationDate = evaluationDate;
-        this.title = title;
-        this.description = description;
-        this.isActive = isActive;
+    @ManyToOne
+    private Teacher assignedTeacher;
+
+    public Evaluation( String code, String title, LocalDate evaluationDate, String description, Teacher assignedTeacher, boolean isActive) {
         this.code = code;
+        this.title = title;
+        this.evaluationDate = evaluationDate;
+        this.description = description;
+        this.assignedTeacher = assignedTeacher;
+        this.isActive = isActive;
     }
 
 }

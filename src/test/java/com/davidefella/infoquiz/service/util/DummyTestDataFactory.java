@@ -1,6 +1,9 @@
 package com.davidefella.infoquiz.service.util;
 
 import com.davidefella.infoquiz.model.persistence.*;
+import com.davidefella.infoquiz.model.persistence.users.Student;
+import com.davidefella.infoquiz.model.persistence.users.UserInfoQuiz;
+import com.davidefella.infoquiz.model.persistence.users.role.InfoQuizRole;
 import com.davidefella.infoquiz.service.*;
 import com.davidefella.infoquiz.service.business.EvaluationHandler;
 import com.davidefella.infoquiz.utility.StartupDataLoader;
@@ -24,18 +27,19 @@ public class DummyTestDataFactory {
     private final AnswerService answerService;
     private final EvaluationService evaluationService;
     private final EvaluationStudentService evaluationStudentService;
-    private final StudentService studentService;
+    private final UserInfoQuizService userInfoQuizService;
+
     private final QuestionService questionItemService;
     private final EvaluationHandler evaluationHandler;
 
     @Autowired
     public DummyTestDataFactory(AnswerService answerService, EvaluationService evaluationService,
-                                EvaluationStudentService evaluationStudentService, StudentService studentService,
+                                EvaluationStudentService evaluationStudentService, UserInfoQuizService userInfoQuizService,
                                 QuestionService questionItemService, EvaluationHandler evaluationHandler) {
         this.answerService = answerService;
         this.evaluationService = evaluationService;
         this.evaluationStudentService = evaluationStudentService;
-        this.studentService = studentService;
+        this.userInfoQuizService = userInfoQuizService;
         this.questionItemService = questionItemService;
         this.evaluationHandler = evaluationHandler;
     }
@@ -43,15 +47,25 @@ public class DummyTestDataFactory {
     public void loadAllDummyData() {
         loadUserData();
         loadEvaluationData();
-        //loadEvaluationPlayerData();
         loadQuestionData();
         loadAnswerData();
 
     }
 
+    private void loadUserData() {
+
+        List<UserInfoQuiz> userInfoQuizs = new ArrayList<>(List.of(
+                new Student("T_S1", "T_Cognome 1", "T_Nome 1", "T_s1@email.com")));
+
+        userInfoQuizService.saveAll(userInfoQuizs);
+
+        logger.info("Loaded Students");
+    }
+
     private void loadEvaluationData() {
-        List<Evaluation> evaluations = List.of(new Evaluation("T_E1", LocalDate.now(), "Evaluation 1", "Evaluation per la classe di Test", true),
-                                               new Evaluation("T_E2", LocalDate.now(), "Evaluation 2", "Evaluation vuota", true));
+
+        List<Evaluation> evaluations = List.of(new Evaluation("T_E1", "Evaluation 1", LocalDate.now(), "Evaluation per la classe di Test", null, true),
+                new Evaluation("T_E2", "Evaluation 2", LocalDate.now(), "Evaluation vuota", null, true));
 
         evaluationService.saveAll(evaluations);
 
@@ -100,11 +114,5 @@ public class DummyTestDataFactory {
 
     }
 
-    private void loadUserData() {
-        List<Student> students = new ArrayList<>(List.of(new Student("T_Cognome 1", "T_Nome 1")));
 
-        studentService.saveAll(students);
-
-        logger.info("Loaded Students");
-    }
 }

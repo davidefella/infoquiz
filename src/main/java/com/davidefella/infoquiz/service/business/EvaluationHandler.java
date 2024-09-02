@@ -1,6 +1,8 @@
 package com.davidefella.infoquiz.service.business;
 
 import com.davidefella.infoquiz.model.persistence.*;
+import com.davidefella.infoquiz.model.persistence.users.Student;
+import com.davidefella.infoquiz.model.persistence.users.UserInfoQuiz;
 import com.davidefella.infoquiz.model.web.EvaluationResult;
 import com.davidefella.infoquiz.service.*;
 import com.davidefella.infoquiz.utility.scoresettings.ScoreConfiguration;
@@ -22,7 +24,7 @@ public class EvaluationHandler {
 
     private AnswerService answerService;
 
-    private StudentService studentService;
+    private UserInfoQuizService studentService;
 
     private EvaluationService evaluationService;
 
@@ -31,7 +33,7 @@ public class EvaluationHandler {
     private ScoreConfiguration scoreConfiguration;
 
     @Autowired
-    public EvaluationHandler(EvaluationStudentService evaluationStudentService, AnswerService answerService, StudentService studentService, EvaluationService evaluationService, QuestionService questionService, ScoreConfiguration scoreConfiguration) {
+    public EvaluationHandler(EvaluationStudentService evaluationStudentService, AnswerService answerService, UserInfoQuizService studentService, EvaluationService evaluationService, QuestionService questionService, ScoreConfiguration scoreConfiguration) {
         this.evaluationStudentService = evaluationStudentService;
         this.answerService = answerService;
         this.studentService = studentService;
@@ -45,9 +47,7 @@ public class EvaluationHandler {
      * The method is void because the Controller manages the session across the various pages.
      */
     @Transactional
-    public EvaluationResult saveEvaluationResults(Evaluation evaluationSession, Student studentSession, List<Answer> answers) {
-
-        Student student = retrieveStudentFromPersistence(studentSession);
+    public EvaluationResult saveEvaluationResults(Evaluation evaluationSession, UserInfoQuiz userInfoSession, List<Answer> answers) {
 
         Evaluation evaluation = evaluationService.findByCode(evaluationSession.getCode())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid evaluation ID"));
@@ -55,7 +55,7 @@ public class EvaluationHandler {
         EvaluationResult evaluationResult = calculateEvaluationScore(evaluation, answers);
 
         // Salva la entry nella tabella EvaluationStudent (quella di Join)
-        EvaluationStudent evaluationStudent = new EvaluationStudent(evaluation, student, evaluationResult.getFinalScore());
+        EvaluationStudent evaluationStudent = new EvaluationStudent(evaluation, userInfoSession, evaluationResult.getFinalScore());
         evaluationStudentService.save(evaluationStudent); // Ricorda è la tabella di join
 
         return evaluationResult;
@@ -105,18 +105,5 @@ public class EvaluationHandler {
         }
 
         return evaluationResult;
-    }
-
-    // Nota: il giocatore potrebbe non essere presente nel database. Se non presente, crealo
-    private Student retrieveStudentFromPersistence(Student studentSession) {
-        Optional<Student> storedStudentOpt = studentService.findByLastNameAndFirstName(studentSession.getLastName(), studentSession.getFirstName());
-
-        Student student = storedStudentOpt.orElseGet(() -> {
-            Student newStudent = new Student(studentSession.getLastName(), studentSession.getFirstName());
-
-            return studentService.save(newStudent);
-        });
-
-        return student;
     }
 }
