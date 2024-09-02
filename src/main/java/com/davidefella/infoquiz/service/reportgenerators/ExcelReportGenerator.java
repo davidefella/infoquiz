@@ -1,7 +1,7 @@
 package com.davidefella.infoquiz.service.reportgenerators;
 
-import com.davidefella.infoquiz.model.persistence.EvaluationPlayer;
-import com.davidefella.infoquiz.service.EvaluationPlayerService;
+import com.davidefella.infoquiz.model.persistence.EvaluationStudent;
+import com.davidefella.infoquiz.service.EvaluationStudentService;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -16,11 +16,11 @@ import java.io.IOException;
 @Component
 public class ExcelReportGenerator {
 
-    EvaluationPlayerService evaluationPlayerService;
+    EvaluationStudentService evaluationStudentService;
 
     @Autowired
-    public ExcelReportGenerator(EvaluationPlayerService evaluationPlayerService) {
-        this.evaluationPlayerService = evaluationPlayerService;
+    public ExcelReportGenerator(EvaluationStudentService evaluationStudentService) {
+        this.evaluationStudentService = evaluationStudentService;
     }
 
     public byte[] generateResultsByEvaluationID(Long evaluationId) throws IOException {
@@ -29,7 +29,7 @@ public class ExcelReportGenerator {
         Sheet sheet = workbook.createSheet("Risultati");
 
         writeHeader(sheet);
-        writePlayers(sheet, evaluationId);
+        writeStudent(sheet, evaluationId);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         workbook.write(out);
@@ -52,15 +52,15 @@ public class ExcelReportGenerator {
 
     }
 
-    private void writePlayers(Sheet sheet, Long evaluationId){
+    private void writeStudent(Sheet sheet, Long evaluationId){
         int rowCounter = 1;
-        Row rowPlayer = null;
-        for (EvaluationPlayer  evaluationPlayer: evaluationPlayerService.findByEvaluationId(evaluationId)){
-            rowPlayer = sheet.createRow(rowCounter++);
+        Row rowStudent = null;
+        for (EvaluationStudent evaluationStudent : evaluationStudentService.findByEvaluationId(evaluationId)){
+            rowStudent = sheet.createRow(rowCounter++);
 
-            rowPlayer.createCell(0).setCellValue(evaluationPlayer.getPlayer().getLastName());
-            rowPlayer.createCell(1).setCellValue(evaluationPlayer.getPlayer().getFirstName());
-            rowPlayer.createCell(2).setCellValue(evaluationPlayer.getScore());
+            rowStudent.createCell(0).setCellValue(evaluationStudent.getStudent().getLastName());
+            rowStudent.createCell(1).setCellValue(evaluationStudent.getStudent().getFirstName());
+            rowStudent.createCell(2).setCellValue(evaluationStudent.getScore());
 
         }
     }

@@ -23,19 +23,19 @@ public class DummyTestDataFactory {
 
     private final AnswerService answerService;
     private final EvaluationService evaluationService;
-    private final EvaluationPlayerService evaluationPlayerService;
-    private final PlayerService playerService;
+    private final EvaluationStudentService evaluationStudentService;
+    private final StudentService studentService;
     private final QuestionService questionItemService;
     private final EvaluationHandler evaluationHandler;
 
     @Autowired
     public DummyTestDataFactory(AnswerService answerService, EvaluationService evaluationService,
-                                EvaluationPlayerService evaluationPlayerService, PlayerService playerService,
+                                EvaluationStudentService evaluationStudentService, StudentService studentService,
                                 QuestionService questionItemService, EvaluationHandler evaluationHandler) {
         this.answerService = answerService;
         this.evaluationService = evaluationService;
-        this.evaluationPlayerService = evaluationPlayerService;
-        this.playerService = playerService;
+        this.evaluationStudentService = evaluationStudentService;
+        this.studentService = studentService;
         this.questionItemService = questionItemService;
         this.evaluationHandler = evaluationHandler;
     }
@@ -101,10 +101,10 @@ public class DummyTestDataFactory {
     }
 
     private void loadUserData() {
-        List<Player> players = new ArrayList<>(List.of(new Player("T_Cognome 1", "T_Nome 1")));
+        List<Student> students = new ArrayList<>(List.of(new Student("T_Cognome 1", "T_Nome 1")));
 
-        playerService.saveAll(players);
+        studentService.saveAll(students);
 
-        logger.info("Loaded players");
+        logger.info("Loaded Students");
     }
 }

@@ -27,19 +27,19 @@ public class DummyDataFactory {
 
     private final AnswerService answerService;
     private final EvaluationService evaluationService;
-    private final EvaluationPlayerService evaluationPlayerService;
-    private final PlayerService playerService;
+    private final EvaluationStudentService evaluationStudentService;
+    private final StudentService studentService;
     private final QuestionService questionItemService;
     private final Environment environment;
 
     @Autowired
     public DummyDataFactory(AnswerService answerService, EvaluationService evaluationService,
-                            EvaluationPlayerService evaluationPlayerService, PlayerService playerService,
+                            EvaluationStudentService evaluationStudentService, StudentService studentService,
                             QuestionService questionItemService, Environment environment) {
         this.answerService = answerService;
         this.evaluationService = evaluationService;
-        this.evaluationPlayerService = evaluationPlayerService;
-        this.playerService = playerService;
+        this.evaluationStudentService = evaluationStudentService;
+        this.studentService = studentService;
         this.questionItemService = questionItemService;
         this.environment = environment;
     }
@@ -47,7 +47,7 @@ public class DummyDataFactory {
     public void loadAllDummyData() {
         loadUserData();
         loadEvaluationData();
-        loadEvaluationPlayerData();
+        loadEvaluationStudentData();
         loadQuestionData();
         loadAnswerData();
 
@@ -109,33 +109,33 @@ public class DummyDataFactory {
     }
 
     private void loadUserData() {
-        List<Player> players = Arrays.asList(
-                new Player("Nome 1", "Nome 1"),
-                new Player("Nome 2", "Nome 2")
+        List<Student> students = Arrays.asList(
+                new Student("Nome 1", "Nome 1"),
+                new Student("Nome 2", "Nome 2")
         );
 
-        for (Player player : players) {
-            playerService.save(player);
+        for (Student student : students) {
+            studentService.save(student);
         }
 
-        logger.info("Loaded players");
+        logger.info("Loaded students");
     }
 
-    private void loadEvaluationPlayerData() {
-        List<Player> players = playerService.findAll();
+    private void loadEvaluationStudentData() {
+        List<Student> students = studentService.findAll();
         List<Evaluation> evaluations = evaluationService.findAll();
 
-        for (Player player : players) {
+        for (Student student : students) {
             for (Evaluation evaluation : evaluations) {
-                EvaluationPlayer evaluationPlayer = new EvaluationPlayer();
-                evaluationPlayer.setPlayer(player);
-                evaluationPlayer.setEvaluation(evaluation);
-                evaluationPlayer.setScore(DecimalRounder.roundToTwoDecimals(Math.random() * 10)); // Random score between 0 and 100
-                evaluationPlayerService.save(evaluationPlayer);
+                EvaluationStudent evaluationStudent = new EvaluationStudent();
+                evaluationStudent.setStudent(student);
+                evaluationStudent.setEvaluation(evaluation);
+                evaluationStudent.setScore(DecimalRounder.roundToTwoDecimals(Math.random() * 10)); // Random score between 0 and 100
+                evaluationStudentService.save(evaluationStudent);
             }
         }
 
-        logger.info("Loaded players sessions");
+        logger.info("Loaded students sessions");
 
     }
 

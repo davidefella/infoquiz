@@ -2,15 +2,14 @@ package com.davidefella.infoquiz.service.business;
 
 import com.davidefella.infoquiz.model.persistence.Answer;
 import com.davidefella.infoquiz.model.persistence.Evaluation;
-import com.davidefella.infoquiz.model.persistence.Player;
+import com.davidefella.infoquiz.model.persistence.Student;
 import com.davidefella.infoquiz.model.web.EvaluationResult;
 import com.davidefella.infoquiz.service.AnswerService;
 import com.davidefella.infoquiz.service.EvaluationService;
-import com.davidefella.infoquiz.service.PlayerService;
+import com.davidefella.infoquiz.service.StudentService;
 import com.davidefella.infoquiz.service.QuestionService;
 import com.davidefella.infoquiz.service.util.DummyTestDataFactory;
 import com.davidefella.infoquiz.utility.scoresettings.ScoreConfiguration;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,7 +35,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class EvaluationHandlerTest {
 
     @Autowired
-    private PlayerService playerService;
+    private StudentService studentService;
 
     @Autowired
     private EvaluationService evaluationService;
@@ -67,7 +65,7 @@ public class EvaluationHandlerTest {
     void testAllAnswersWrong(){
         // Arrange
         Evaluation ev1 = evaluationService.findByCode("T_E1").orElseThrow(() -> new NoSuchElementException("Evaluation not found"));
-        Player pl1 = playerService.findByLastNameAndFirstName("T_Cognome 1", "T_Nome 1").orElseThrow(() -> new NoSuchElementException("Player not found"));
+        Student st1 = studentService.findByLastNameAndFirstName("T_Cognome 1", "T_Nome 1").orElseThrow(() -> new NoSuchElementException("Student not found"));
 
         Answer a3 = answerService.findByCode("T_A3").orElseThrow(() -> new NoSuchElementException("T_A3 not found"));
         Answer a4 = answerService.findByCode("T_A4").orElseThrow(() -> new NoSuchElementException("T_A4 not found"));
@@ -76,7 +74,7 @@ public class EvaluationHandlerTest {
         List<Answer> wrongAnswers = List.of(a3,a4,a8);
 
         // Act
-        EvaluationResult evRes = evaluationHandler.saveEvaluationResults(ev1, pl1, wrongAnswers);
+        EvaluationResult evRes = evaluationHandler.saveEvaluationResults(ev1, st1, wrongAnswers);
 
         // Assert
         assertEquals(scoreConfiguration.getPenaltyPoints()*3, evRes.getFinalScore());
@@ -90,7 +88,7 @@ public class EvaluationHandlerTest {
     void testAllAnswersCorrect(){
         // Arrange
         Evaluation ev1 = evaluationService.findByCode("T_E1").orElseThrow(() -> new NoSuchElementException("Evaluation not found"));
-        Player pl1 = playerService.findByLastNameAndFirstName("T_Cognome 1", "T_Nome 1").orElseThrow(() -> new NoSuchElementException("Player not found"));
+        Student st1 = studentService.findByLastNameAndFirstName("T_Cognome 1", "T_Nome 1").orElseThrow(() -> new NoSuchElementException("Student not found"));
 
         Answer a1 = answerService.findByCode("T_A1").orElseThrow(() -> new NoSuchElementException("T_A1 not found"));
         Answer a5 = answerService.findByCode("T_A5").orElseThrow(() -> new NoSuchElementException("T_A5 not found"));
@@ -99,7 +97,7 @@ public class EvaluationHandlerTest {
         List<Answer> correctAnswers = List.of(a1,a5,a9);
 
         // Act
-        EvaluationResult evRes = evaluationHandler.saveEvaluationResults(ev1, pl1, correctAnswers);
+        EvaluationResult evRes = evaluationHandler.saveEvaluationResults(ev1, st1, correctAnswers);
 
         // Assert
         assertEquals(scoreConfiguration.getBonusPoints()*3, evRes.getFinalScore());
@@ -113,7 +111,7 @@ public class EvaluationHandlerTest {
     void testMixedAnswers_1(){
         // Arrange
         Evaluation ev1 = evaluationService.findByCode("T_E1").orElseThrow(() -> new NoSuchElementException("Evaluation not found"));
-        Player pl1 = playerService.findByLastNameAndFirstName("T_Cognome 1", "T_Nome 1").orElseThrow(() -> new NoSuchElementException("Player not found"));
+        Student st1 = studentService.findByLastNameAndFirstName("T_Cognome 1", "T_Nome 1").orElseThrow(() -> new NoSuchElementException("stayer not found"));
 
         Answer a1 = answerService.findByCode("T_A1").orElseThrow(() -> new NoSuchElementException("T_A1 not found"));
         Answer a4 = answerService.findByCode("T_A4").orElseThrow(() -> new NoSuchElementException("T_A4 not found"));
@@ -121,7 +119,7 @@ public class EvaluationHandlerTest {
         List<Answer> mixedAnswers = List.of(a1,a4);
 
         // Act
-        EvaluationResult evRes = evaluationHandler.saveEvaluationResults(ev1, pl1, mixedAnswers);
+        EvaluationResult evRes = evaluationHandler.saveEvaluationResults(ev1, st1, mixedAnswers);
 
         // Assert
         assertEquals(scoreConfiguration.getBonusPoints() + scoreConfiguration.getPenaltyPoints() + scoreConfiguration.getNotAnsweredPoints(), evRes.getFinalScore());
@@ -135,7 +133,7 @@ public class EvaluationHandlerTest {
     void testMixedAnswers_2(){
         // Arrange
         Evaluation ev1 = evaluationService.findByCode("T_E1").orElseThrow(() -> new NoSuchElementException("Evaluation not found"));
-        Player pl1 = playerService.findByLastNameAndFirstName("T_Cognome 1", "T_Nome 1").orElseThrow(() -> new NoSuchElementException("Player not found"));
+        Student st1 = studentService.findByLastNameAndFirstName("T_Cognome 1", "T_Nome 1").orElseThrow(() -> new NoSuchElementException("stayer not found"));
 
         Answer a2 = answerService.findByCode("T_A2").orElseThrow(() -> new NoSuchElementException("T_A2 not found"));
         Answer a9 = answerService.findByCode("T_A9").orElseThrow(() -> new NoSuchElementException("T_A9 not found"));
@@ -143,7 +141,7 @@ public class EvaluationHandlerTest {
         List<Answer> mixedAnswers = List.of(a2,a9);
 
         // Act
-        EvaluationResult evRes = evaluationHandler.saveEvaluationResults(ev1, pl1, mixedAnswers);
+        EvaluationResult evRes = evaluationHandler.saveEvaluationResults(ev1, st1, mixedAnswers);
 
         // Assert
         assertEquals(scoreConfiguration.getBonusPoints() + scoreConfiguration.getPenaltyPoints() + scoreConfiguration.getNotAnsweredPoints(), evRes.getFinalScore());
@@ -157,12 +155,12 @@ public class EvaluationHandlerTest {
     void testAllUnanswered(){
         // Arrange
         Evaluation ev1 = evaluationService.findByCode("T_E1").orElseThrow(() -> new NoSuchElementException("Evaluation not found"));
-        Player pl1 = playerService.findByLastNameAndFirstName("T_Cognome 1", "T_Nome 1").orElseThrow(() -> new NoSuchElementException("Player not found"));
+        Student st1 = studentService.findByLastNameAndFirstName("T_Cognome 1", "T_Nome 1").orElseThrow(() -> new NoSuchElementException("stayer not found"));
 
         List<Answer> unanswered = new ArrayList<>();
 
         // Act
-        EvaluationResult evRes = evaluationHandler.saveEvaluationResults(ev1, pl1, unanswered);
+        EvaluationResult evRes = evaluationHandler.saveEvaluationResults(ev1, st1, unanswered);
 
         // Assert
         assertEquals(scoreConfiguration.getNotAnsweredPoints()*3, evRes.getFinalScore());

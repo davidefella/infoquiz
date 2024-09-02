@@ -13,14 +13,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Rappresenta la tabella di join tra entità Evaluation e Player
+ * Rappresenta la tabella di join tra entità Evaluation e Student
  */
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EvaluationPlayer {
+public class EvaluationStudent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,14 +31,14 @@ public class EvaluationPlayer {
     private Evaluation evaluation;
 
     @ManyToOne
-    @JoinColumn(name = "player_id")
-    private Player player;
+    @JoinColumn(name = "student_id")
+    private Student student;
 
     private double score;
 
-    public EvaluationPlayer(Evaluation evaluation, Player player, double score) {
+    public EvaluationStudent(Evaluation evaluation, Student student, double score) {
         this.evaluation = evaluation;
-        this.player = player;
+        this.student = student;
         this.score = score;
     }
 

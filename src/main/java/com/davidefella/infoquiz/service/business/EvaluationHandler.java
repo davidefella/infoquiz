@@ -18,11 +18,11 @@ public class EvaluationHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(EvaluationHandler.class);
 
-    private EvaluationPlayerService evaluationPlayerService;
+    private EvaluationStudentService evaluationStudentService;
 
     private AnswerService answerService;
 
-    private PlayerService playerService;
+    private StudentService studentService;
 
     private EvaluationService evaluationService;
 
@@ -31,32 +31,32 @@ public class EvaluationHandler {
     private ScoreConfiguration scoreConfiguration;
 
     @Autowired
-    public EvaluationHandler(EvaluationPlayerService evaluationPlayerService, AnswerService answerService, PlayerService playerService, EvaluationService evaluationService, QuestionService questionService, ScoreConfiguration scoreConfiguration) {
-        this.evaluationPlayerService = evaluationPlayerService;
+    public EvaluationHandler(EvaluationStudentService evaluationStudentService, AnswerService answerService, StudentService studentService, EvaluationService evaluationService, QuestionService questionService, ScoreConfiguration scoreConfiguration) {
+        this.evaluationStudentService = evaluationStudentService;
         this.answerService = answerService;
-        this.playerService = playerService;
+        this.studentService = studentService;
         this.evaluationService = evaluationService;
         this.questionService = questionService;
         this.scoreConfiguration = scoreConfiguration;
     }
 
     /**
-     * Saves the results of the evaluation, including player data and score.
+     * Saves the results of the evaluation, including student data and score.
      * The method is void because the Controller manages the session across the various pages.
      */
     @Transactional
-    public EvaluationResult saveEvaluationResults(Evaluation evaluationSession, Player playerSession, List<Answer> answers) {
+    public EvaluationResult saveEvaluationResults(Evaluation evaluationSession, Student studentSession, List<Answer> answers) {
 
-        Player player = retrievePlayerFromPersistence(playerSession);
+        Student student = retrieveStudentFromPersistence(studentSession);
 
         Evaluation evaluation = evaluationService.findByCode(evaluationSession.getCode())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid evaluation ID"));
 
         EvaluationResult evaluationResult = calculateEvaluationScore(evaluation, answers);
 
-        // Salva la entry nella tabella EvaluationPlayer (quella di Join)
-        EvaluationPlayer evaluationPlayer = new EvaluationPlayer(evaluation, player, evaluationResult.getFinalScore());
-        evaluationPlayerService.save(evaluationPlayer); // Ricorda è la tabella di join
+        // Salva la entry nella tabella EvaluationStudent (quella di Join)
+        EvaluationStudent evaluationStudent = new EvaluationStudent(evaluation, student, evaluationResult.getFinalScore());
+        evaluationStudentService.save(evaluationStudent); // Ricorda è la tabella di join
 
         return evaluationResult;
     }
@@ -108,15 +108,15 @@ public class EvaluationHandler {
     }
 
     // Nota: il giocatore potrebbe non essere presente nel database. Se non presente, crealo
-    private Player retrievePlayerFromPersistence(Player playerSession) {
-        Optional<Player> storedPlayerOpt = playerService.findByLastNameAndFirstName(playerSession.getLastName(), playerSession.getFirstName());
+    private Student retrieveStudentFromPersistence(Student studentSession) {
+        Optional<Student> storedStudentOpt = studentService.findByLastNameAndFirstName(studentSession.getLastName(), studentSession.getFirstName());
 
-        Player player = storedPlayerOpt.orElseGet(() -> {
-            Player newPlayer = new Player(playerSession.getLastName(), playerSession.getFirstName());
+        Student student = storedStudentOpt.orElseGet(() -> {
+            Student newStudent = new Student(studentSession.getLastName(), studentSession.getFirstName());
 
-            return playerService.save(newPlayer);
+            return studentService.save(newStudent);
         });
 
-        return player;
+        return student;
     }
 }

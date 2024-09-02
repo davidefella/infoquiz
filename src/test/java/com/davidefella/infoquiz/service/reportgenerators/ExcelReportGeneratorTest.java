@@ -1,29 +1,14 @@
 package com.davidefella.infoquiz.service.reportgenerators;
 
-import com.davidefella.infoquiz.model.persistence.Evaluation;
-import com.davidefella.infoquiz.model.persistence.EvaluationPlayer;
-import com.davidefella.infoquiz.model.persistence.Player;
-import com.davidefella.infoquiz.service.EvaluationPlayerService;
+import com.davidefella.infoquiz.service.EvaluationStudentService;
 import com.davidefella.infoquiz.service.EvaluationService;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 @ExtendWith(SpringExtension.class)
@@ -31,7 +16,7 @@ import static org.mockito.MockitoAnnotations.openMocks;
 public class ExcelReportGeneratorTest {
 
     @Mock
-    private EvaluationPlayerService evaluationPlayerService;
+    private EvaluationStudentService evaluationStudentService;
 
     @Mock
     private EvaluationService evaluationService;
@@ -46,7 +31,7 @@ public class ExcelReportGeneratorTest {
 
 
 
-    /*
+    /* Da riscrivere
     @Test
     void testGenerateResultsByEvaluationCode() throws IOException {
         // Arrange: Configura un oggetto Evaluation e assicurati che non sia null
@@ -56,7 +41,7 @@ public class ExcelReportGeneratorTest {
 
         when(evaluationService.findByCode("E1")).thenReturn(evaluation);
 
-        // Lista di EvaluationPlayer fittizia
+        // Lista di EvaluationStudent fittizia
         List<EvaluationPlayer> evaluationPlayers = Arrays.asList(
                 new EvaluationPlayer(evaluation, new Player("John", "Smith"), 85.0),
                 new EvaluationPlayer(evaluation, new Player("Jane", "Doe"), 90.0)

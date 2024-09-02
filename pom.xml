@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.davidefella</groupId>
 	<artifactId>infoquiz</artifactId>
-	<version>2.0.0</version>
+	<version>2.0.1</version>
 	<packaging>jar</packaging>
 	<name>infoquiz</name>
 	<description>Infoquiz System: un&apos;applicazione web per creare, gestire e valutare quiz per studenti</description>

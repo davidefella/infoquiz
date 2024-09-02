@@ -2,7 +2,6 @@ package com.davidefella.infoquiz.model.persistence;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {"lastName", "firstName"})})
-public class Player {
+public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,7 +27,7 @@ public class Player {
     @NotNull
     private String firstName;
 
-    public Player(String lastName, String firstName) {
+    public Student(String lastName, String firstName) {
         this.lastName = lastName;
         this.firstName = firstName;
     }
