@@ -9,10 +9,10 @@
 		<relativePath/>
 	</parent>
 	<groupId>com.davidefella</groupId>
-	<artifactId>infoquiz</artifactId>
+	<artifactId>infoquiz-backend</artifactId>
 	<version>2.0.1</version>
 	<packaging>jar</packaging>
-	<name>infoquiz</name>
+	<name>infoquiz-backend</name>
 	<description>Infoquiz System: un&apos;applicazione web per creare, gestire e valutare quiz per studenti</description>
 	<url/>
 	<licenses>
