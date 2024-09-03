@@ -2,7 +2,6 @@ package com.davidefella.infoquiz.service.business;
 
 import com.davidefella.infoquiz.model.persistence.Answer;
 import com.davidefella.infoquiz.model.persistence.Evaluation;
-import com.davidefella.infoquiz.model.persistence.users.Student;
 import com.davidefella.infoquiz.model.persistence.users.UserInfoQuiz;
 import com.davidefella.infoquiz.model.web.EvaluationResult;
 import com.davidefella.infoquiz.service.AnswerService;

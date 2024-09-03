@@ -36,6 +36,7 @@ public abstract class UserInfoQuiz {
 
     @Column(nullable = false)
     private LocalDateTime creationDateTime;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private InfoQuizRole infoQuizRole;

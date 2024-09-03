@@ -64,7 +64,8 @@ public class DummyTestDataFactory {
 
     private void loadEvaluationData() {
 
-        List<Evaluation> evaluations = List.of(new Evaluation("T_E1", "Evaluation 1", LocalDate.now(), "Evaluation per la classe di Test", null, true),
+        List<Evaluation> evaluations = List.of(
+                new Evaluation("T_E1", "Evaluation 1", LocalDate.now(), "Evaluation per la classe di Test", null, true),
                 new Evaluation("T_E2", "Evaluation 2", LocalDate.now(), "Evaluation vuota", null, true));
 
         evaluationService.saveAll(evaluations);

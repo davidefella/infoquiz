@@ -2,14 +2,12 @@ package com.davidefella.infoquiz.model.persistence;
 
 import com.davidefella.infoquiz.model.persistence.users.Teacher;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-/**
- * Rappresenta l'entità del quiz con i macro dati associati.
- */
 @Data
 @Entity
 @NoArgsConstructor
@@ -19,16 +17,24 @@ public class Evaluation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(unique = true)
-    private String code; // Alternativo a id del DB
+    @NotNull
+    @Column(unique = true, nullable = false)
+    private String code;
 
+    @NotNull
     private LocalDate evaluationDate;
+
+    @NotNull
+    @Column(unique = true, nullable = false)
     private String title;
+
     private String description;
     private boolean isActive;
 
     @ManyToOne
+    @JoinColumn(name = "teacher_id")
     private Teacher assignedTeacher;
+
 
     public Evaluation( String code, String title, LocalDate evaluationDate, String description, Teacher assignedTeacher, boolean isActive) {
         this.code = code;

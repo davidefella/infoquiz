@@ -1,6 +1,5 @@
 package com.davidefella.infoquiz.model.persistence;
 
-import com.davidefella.infoquiz.model.persistence.users.Student;
 import com.davidefella.infoquiz.model.persistence.users.UserInfoQuiz;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,9 +13,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Rappresenta la tabella di join tra entità Evaluation e Student
- */
 @Data
 @Entity
 @AllArgsConstructor

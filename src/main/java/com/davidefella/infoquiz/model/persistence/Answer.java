@@ -8,11 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Risposta associata alla domanda (che è associata al quiz). Nella
- * versione attuale ho una sola domanda corretta per domanda e tutte
- * le risposte pesano allo stesso modo, in negativo e/o in positivo
- *  */
 @Data
 @Entity
 @Builder
@@ -25,13 +20,15 @@ public class Answer {
     private Long id;
 
     @NotNull
+    @Column(unique = true, nullable = false)
+    private String code;
+
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "question_item_id", nullable = false)
     private Question question;
 
-    @Column(unique = true)
-    private String code; // Alternativo a id del DB
-
+    @JoinColumn(nullable = false)
     private String answerText;
     private boolean isCorrect;
 
@@ -40,9 +37,5 @@ public class Answer {
         this.answerText = answerText;
         this.isCorrect = isCorrect;
         this.code = code;
-    }
-
-    public Long getQuestionId() {
-        return question != null ? question.getId() : null;
     }
 }
