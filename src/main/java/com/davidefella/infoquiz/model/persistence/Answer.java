@@ -30,6 +30,7 @@ public class Answer {
 
     @JoinColumn(nullable = false)
     private String answerText;
+
     private boolean isCorrect;
 
     public Answer(String code, Question question, String answerText, boolean isCorrect) {

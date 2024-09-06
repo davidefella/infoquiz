@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -35,6 +36,22 @@ public class UserInfoQuizService {
 
     public Optional<UserInfoQuiz> findByLastNameAndFirstName(String lastName, String firstName) {
         return userInfoQuizRepository.findByLastNameAndFirstName(lastName, firstName);
+    }
+
+    public Optional<Student> findStudentByLastNameAndFirstName(String lastName, String firstName) {
+        Optional<UserInfoQuiz> userInfoQuizOpt = userInfoQuizRepository.findByLastNameAndFirstName(lastName, firstName);
+
+        if (userInfoQuizOpt.isEmpty()) {
+            return Optional.empty();
+        }
+
+        UserInfoQuiz userTmp = userInfoQuizOpt.get();
+
+        if (userTmp instanceof Student) {
+            return Optional.of((Student) userTmp);
+        } else {
+            return Optional.empty();
+        }
     }
 
     /*

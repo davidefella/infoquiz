@@ -47,7 +47,7 @@ public class EvaluationHandler {
      * The method is void because the Controller manages the session across the various pages.
      */
     @Transactional
-    public EvaluationResult saveEvaluationResults(Evaluation evaluationSession, UserInfoQuiz userInfoSession, List<Answer> answers) {
+    public EvaluationResult saveEvaluationResults(Evaluation evaluationSession, Student userInfoSession, List<Answer> answers) {
 
         Evaluation evaluation = evaluationService.findByCode(evaluationSession.getCode())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid evaluation ID"));

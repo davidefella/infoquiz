@@ -30,10 +30,6 @@ public class Question {
     @JoinColumn(nullable = false)
     private Evaluation evaluation;
 
-    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER)
-    @JsonIgnore
-    private List<Answer> answers;
-
     @JoinColumn(nullable = false)
     private String questionText;
 

@@ -21,6 +21,10 @@ public class Evaluation {
     @Column(unique = true, nullable = false)
     private String code;
 
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
+    private Teacher assignedTeacher;
+
     @NotNull
     private LocalDate evaluationDate;
 
@@ -29,12 +33,8 @@ public class Evaluation {
     private String title;
 
     private String description;
+
     private boolean isActive;
-
-    @ManyToOne
-    @JoinColumn(name = "teacher_id")
-    private Teacher assignedTeacher;
-
 
     public Evaluation( String code, String title, LocalDate evaluationDate, String description, Teacher assignedTeacher, boolean isActive) {
         this.code = code;
