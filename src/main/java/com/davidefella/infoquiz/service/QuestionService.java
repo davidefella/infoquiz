@@ -1,15 +1,15 @@
 package com.davidefella.infoquiz.service;
 
-import com.davidefella.infoquiz.exception.DuplicateCodeException;
+import com.davidefella.infoquiz.exception.DuplicateUUIDException;
 import com.davidefella.infoquiz.model.persistence.Question;
 import com.davidefella.infoquiz.repository.QuestionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class QuestionService {
@@ -28,8 +28,8 @@ public class QuestionService {
         return questionRepository.findById(id);
     }
 
-    public Optional<Question> findByCode(String code) {
-        return questionRepository.findByCode(code);
+    public Optional<Question> findByUUID(UUID uuid) {
+        return questionRepository.findByUuid(uuid);
     }
 
     public List<Question> findByEvaluationIdRandomized(Long evaluationId) {
@@ -42,8 +42,8 @@ public class QuestionService {
         return questionRepository.findByEvaluationId(evaluationId);
     }
 
-    public Optional<List<Question>> findByEvaluationCode(String evaluationCode) {
-        return questionRepository.findByEvaluationCode(evaluationCode);
+    public Optional<List<Question>> findByEvaluationUUID(UUID uuid) {
+        return questionRepository.findByEvaluationUuid(uuid);
     }
 
     public Question save(Question questionItem) {
@@ -52,7 +52,7 @@ public class QuestionService {
             return questionRepository.save(questionItem);
 
         } catch (DataIntegrityViolationException ex) {
-            throw new DuplicateCodeException("A question with code " + questionItem.getCode() + " already exists.");
+            throw new DuplicateUUIDException("A question with uuid " + questionItem.getUuid() + " already exists.");
         }
     }
 
@@ -60,11 +60,4 @@ public class QuestionService {
 
         return questionRepository.saveAll(questions);
     }
-
-    public void deleteById(Long id) {
-         questionRepository.deleteById(id);
-    }
-
-
 }
-

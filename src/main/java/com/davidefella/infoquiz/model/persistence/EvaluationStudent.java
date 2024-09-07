@@ -2,17 +2,12 @@ package com.davidefella.infoquiz.model.persistence;
 
 import com.davidefella.infoquiz.model.persistence.users.Student;
 import com.davidefella.infoquiz.model.persistence.users.UserInfoQuiz;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
+import java.util.UUID;
 
 @Data
 @Entity
@@ -25,6 +20,10 @@ public class EvaluationStudent {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Setter(AccessLevel.NONE)
+    @Column(nullable = false, unique = true)
+    private UUID uuid;
+
     @ManyToOne
     @JoinColumn(name = "evaluation_id")
     private Evaluation evaluation;
@@ -36,9 +35,15 @@ public class EvaluationStudent {
     private double score;
 
     public EvaluationStudent(Evaluation evaluation, Student student, double score) {
+        this.uuid = UUID.randomUUID();
         this.evaluation = evaluation;
         this.student = student;
         this.score = score;
     }
 
+    public EvaluationStudent(UUID uuid, Evaluation evaluation, Student student, double score) {
+        this.evaluation = evaluation;
+        this.student = student;
+        this.score = score;
+    }
 }

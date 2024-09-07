@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
@@ -14,5 +15,5 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
     List<Answer> findByIsCorrectTrueAndQuestionEvaluationId(Long evaluationId);
 
-    Optional<Answer> findByCode(String code);
+    Optional<Answer> findByUuid(UUID uuid);
 }

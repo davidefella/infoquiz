@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AnswerService {
@@ -26,8 +27,8 @@ public class AnswerService {
         return answerRepository.findById(id);
     }
 
-    public Optional<Answer> findByCode(String code) {
-        return answerRepository.findByCode(code);
+    public Optional<Answer> findByUUID(UUID uuid) {
+        return answerRepository.findByUuid(uuid);
     }
 
     public Answer save(Answer answer) {

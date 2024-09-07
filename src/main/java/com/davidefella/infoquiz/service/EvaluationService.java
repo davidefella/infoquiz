@@ -9,6 +9,7 @@ import com.davidefella.infoquiz.utility.scoresettings.ScoreConfiguration;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class EvaluationService {
@@ -34,8 +35,8 @@ public class EvaluationService {
         return evaluationRepository.findById(id);
     }
 
-    public Optional<Evaluation> findByCode(String code) {
-        return evaluationRepository.findByCode(code);
+    public Optional<Evaluation> findByUUID(UUID uuid) {
+        return evaluationRepository.findByUuid(uuid);
     }
 
     public Evaluation save(Evaluation evaluation) {

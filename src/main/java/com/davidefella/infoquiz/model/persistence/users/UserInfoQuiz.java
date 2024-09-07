@@ -3,12 +3,13 @@ package com.davidefella.infoquiz.model.persistence.users;
 import com.davidefella.infoquiz.model.persistence.users.role.InfoQuizRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
-
+import java.util.UUID;
 @Data
 @Entity
 @NoArgsConstructor
@@ -19,9 +20,9 @@ public abstract class UserInfoQuiz {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
+    @Setter(AccessLevel.NONE)
     @Column(nullable = false, unique = true)
-    private String code;
+    private UUID uuid;
 
     @NotNull
     @Column(nullable = false)
@@ -41,16 +42,17 @@ public abstract class UserInfoQuiz {
     @Column(nullable = false)
     private InfoQuizRole infoQuizRole;
 
-    protected UserInfoQuiz(String code, String lastName, String firstName, String email, InfoQuizRole infoQuizRole) {
+    protected UserInfoQuiz(String lastName, String firstName, String email, InfoQuizRole infoQuizRole) {
+        this.uuid = UUID.randomUUID();
         this.lastName = lastName;
         this.firstName = firstName;
         this.email = email;
-        this.code = code;
         this.creationDateTime = LocalDateTime.now();
         this.infoQuizRole = infoQuizRole;
     }
 
-    protected UserInfoQuiz(String lastName, String firstName, String email, InfoQuizRole infoQuizRole) {
+    protected UserInfoQuiz(UUID uuid, String lastName, String firstName, String email, InfoQuizRole infoQuizRole) {
+        this.uuid = uuid;
         this.lastName = lastName;
         this.firstName = firstName;
         this.email = email;

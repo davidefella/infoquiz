@@ -19,7 +19,6 @@ import java.util.List;
  * Utile per test e demo
  *
  * */
-
 @Component
 @Deprecated
 public class DummyDataFactory {
@@ -31,18 +30,16 @@ public class DummyDataFactory {
     private final EvaluationStudentService evaluationStudentService;
     private final UserInfoQuizService userInfoQuizService;
     private final QuestionService questionItemService;
-    private final Environment environment;
 
     @Autowired
     public DummyDataFactory(AnswerService answerService, EvaluationService evaluationService,
                             EvaluationStudentService evaluationStudentService, UserInfoQuizService userInfoQuizService,
-                            QuestionService questionItemService, Environment environment) {
+                            QuestionService questionItemService) {
         this.answerService = answerService;
         this.evaluationService = evaluationService;
         this.evaluationStudentService = evaluationStudentService;
         this.userInfoQuizService = userInfoQuizService;
         this.questionItemService = questionItemService;
-        this.environment = environment;
     }
 
     public void loadAllDummyData() {
@@ -56,8 +53,8 @@ public class DummyDataFactory {
 
     private void loadUserData() {
         List<Student> students = Arrays.asList(
-                new Student("S1", "Cognome 1", "Nome 1", "s1@email.com"),
-                new Student("S2", "Cognome 2", "Nome 2", "s2@email.com")
+                new Student("Cognome 1", "Nome 1", "s1@email.com"),
+                new Student("Cognome 2", "Nome 2", "s2@email.com")
         );
 
         for (Student student : students) {
@@ -70,9 +67,9 @@ public class DummyDataFactory {
     private void loadEvaluationData() {
 
         List<Evaluation> evaluations = Arrays.asList(
-                new Evaluation("E1", "Evaluation 1", LocalDate.now(), "Descrizione Evaluation 1", null, true),
-                new Evaluation("E2", "Evaluation 2", LocalDate.now().minusMonths(1), "Descrizione Evaluation 2", null, true),
-                new Evaluation("E3", "Evaluation 3", LocalDate.now().minusMonths(2), "Descrizione Evaluation 3", null, true)
+                new Evaluation("Evaluation 1", LocalDate.now(), "Descrizione Evaluation 1", null, true),
+                new Evaluation("Evaluation 2", LocalDate.now().minusMonths(1), "Descrizione Evaluation 2", null, true),
+                new Evaluation("Evaluation 3", LocalDate.now().minusMonths(2), "Descrizione Evaluation 3", null, true)
         );
 
         for (Evaluation evaluation : evaluations) {
@@ -87,11 +84,11 @@ public class DummyDataFactory {
 
         for (Evaluation evaluation : evaluations) {
             List<Question> questions = Arrays.asList(
-                    new Question(evaluation.getCode().concat("Q1"), evaluation, "Question 1 ?"),
-                    new Question(evaluation.getCode().concat("Q2"), evaluation, "Question 2 ?"),
-                    new Question(evaluation.getCode().concat("Q3"), evaluation, "Question 3 ?"),
-                    new Question(evaluation.getCode().concat("Q4"), evaluation, "Question 4 ?"),
-                    new Question(evaluation.getCode().concat("Q5"), evaluation, "Question 5 ?")
+                    new Question(evaluation, "Question 1 ?"),
+                    new Question(evaluation, "Question 2 ?"),
+                    new Question(evaluation, "Question 3 ?"),
+                    new Question(evaluation, "Question 4 ?"),
+                    new Question(evaluation, "Question 5 ?")
             );
 
             for (Question question : questions) {
@@ -108,10 +105,10 @@ public class DummyDataFactory {
 
         for (Question question : questions) {
             List<Answer> answers = Arrays.asList(
-                    new Answer(question.getCode().concat("A1"), question, "Correct answer for " + question.getQuestionText(), true),
-                    new Answer(question.getCode().concat("A2"), question, "answer 2 <code> Some Code </code>?\n ", false),
-                    new Answer(question.getCode().concat("A3"), question, "answer 3 ", false),
-                    new Answer(question.getCode().concat("A4"), question, "answer 4 ", false)
+                    new Answer(question, "Correct answer for " + question.getQuestionText(), true),
+                    new Answer(question, "answer 2 <code> Some Code </code>?\n ", false),
+                    new Answer(question, "answer 3 ", false),
+                    new Answer(question, "answer 4 ", false)
             );
 
             for (Answer answer : answers) {
@@ -133,7 +130,9 @@ public class DummyDataFactory {
                 EvaluationStudent evaluationStudent = new EvaluationStudent();
                 evaluationStudent.setStudent(student);
                 evaluationStudent.setEvaluation(evaluation);
-                evaluationStudent.setScore(DecimalRounder.roundToTwoDecimals(Math.random() * 10)); // Random score between 0 and 100
+
+                // Random score between 0 and 100
+                evaluationStudent.setScore(DecimalRounder.roundToTwoDecimals(Math.random() * 10));
                 evaluationStudentService.save(evaluationStudent);
             }
         }
@@ -141,6 +140,4 @@ public class DummyDataFactory {
         logger.info("Loaded students sessions");
 
     }
-
-
 }

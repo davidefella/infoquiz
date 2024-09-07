@@ -1,6 +1,6 @@
 package com.davidefella.infoquiz.exception.global;
 
-import com.davidefella.infoquiz.exception.DuplicateCodeException;
+import com.davidefella.infoquiz.exception.DuplicateUUIDException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(DuplicateCodeException.class)
-    public ResponseEntity<ApiError> handleDuplicateCodeException(DuplicateCodeException ex) {
+    @ExceptionHandler(DuplicateUUIDException.class)
+    public ResponseEntity<ApiError> handleDuplicateUUIDException(DuplicateUUIDException ex) {
         ApiError apiError = new ApiError(HttpStatus.CONFLICT.value(), ex.getMessage());
         return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
     }

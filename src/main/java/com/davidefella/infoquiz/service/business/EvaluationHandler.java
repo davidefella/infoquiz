@@ -2,7 +2,6 @@ package com.davidefella.infoquiz.service.business;
 
 import com.davidefella.infoquiz.model.persistence.*;
 import com.davidefella.infoquiz.model.persistence.users.Student;
-import com.davidefella.infoquiz.model.persistence.users.UserInfoQuiz;
 import com.davidefella.infoquiz.model.web.EvaluationResult;
 import com.davidefella.infoquiz.service.*;
 import com.davidefella.infoquiz.utility.scoresettings.ScoreConfiguration;
@@ -49,7 +48,7 @@ public class EvaluationHandler {
     @Transactional
     public EvaluationResult saveEvaluationResults(Evaluation evaluationSession, Student userInfoSession, List<Answer> answers) {
 
-        Evaluation evaluation = evaluationService.findByCode(evaluationSession.getCode())
+        Evaluation evaluation = evaluationService.findByUUID(evaluationSession.getUuid())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid evaluation ID"));
 
         EvaluationResult evaluationResult = calculateEvaluationScore(evaluation, answers);
@@ -70,10 +69,11 @@ public class EvaluationHandler {
     private EvaluationResult calculateEvaluationScore(Evaluation evaluation, List<Answer> answers) {
         EvaluationResult evaluationResult = new EvaluationResult();
 
-        Optional<List<Question>> questionsByEvaluationCodeOpt = questionService.findByEvaluationCode(evaluation.getCode());
+        Optional<List<Question>> questionsByEvaluationUUIDOpt = questionService.findByEvaluationUUID(evaluation.getUuid());
+
         /* TODO: Lanciare una eccezione */
-        if(questionsByEvaluationCodeOpt.isPresent()){
-            int totalQuestions = questionsByEvaluationCodeOpt.get().size();
+        if(questionsByEvaluationUUIDOpt.isPresent()){
+            int totalQuestions = questionsByEvaluationUUIDOpt.get().size();
             evaluationResult.setUnansweredQuestions( (byte) (totalQuestions - answers.size()) );
         }
 

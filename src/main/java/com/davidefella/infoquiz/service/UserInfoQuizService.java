@@ -61,18 +61,6 @@ public class UserInfoQuizService {
         return userInfoQuizRepository.saveAll(usersInfoQuiz);
     }
 
-
-    public UserInfoQuiz save(String code, String lastName, String firstName, String email, List<String> subjects, InfoQuizRole role) {
-
-        if (firstName == null || lastName == null) {
-            throw new IllegalArgumentException("First name and last name cannot be null");
-        }
-
-        UserInfoQuiz userInfoQuiz = UserInfoQuizFactory.createUser(code, lastName, firstName, email, subjects, role);
-
-        return userInfoQuizRepository.save(userInfoQuiz);
-    }
-
     /* Utile per test e DataLoader */
     public UserInfoQuiz save(UserInfoQuiz userInfoQuiz) {
         return userInfoQuizRepository.save(userInfoQuiz);

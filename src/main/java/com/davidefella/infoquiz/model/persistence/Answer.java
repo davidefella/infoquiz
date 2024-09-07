@@ -3,10 +3,9 @@ package com.davidefella.infoquiz.model.persistence;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.UUID;
 
 @Data
 @Entity
@@ -19,9 +18,9 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @Column(unique = true, nullable = false)
-    private String code;
+    @Setter(AccessLevel.NONE)
+    @Column(nullable = false, unique = true)
+    private UUID uuid;
 
     @NotNull
     @ManyToOne
@@ -33,10 +32,17 @@ public class Answer {
 
     private boolean isCorrect;
 
-    public Answer(String code, Question question, String answerText, boolean isCorrect) {
+    public Answer(Question question, String answerText, boolean isCorrect) {
+        this.uuid = UUID.randomUUID();
         this.question = question;
         this.answerText = answerText;
         this.isCorrect = isCorrect;
-        this.code = code;
+    }
+
+    public Answer(UUID uuid, Question question, String answerText, boolean isCorrect) {
+        this.uuid = uuid;
+        this.question = question;
+        this.answerText = answerText;
+        this.isCorrect = isCorrect;
     }
 }

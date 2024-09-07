@@ -8,6 +8,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 public class Teacher extends UserInfoQuiz{
@@ -19,8 +20,13 @@ public class Teacher extends UserInfoQuiz{
     private List<Evaluation> evaluationsAssigned;
 
 
-    public Teacher(String code, String lastName, String firstName, String email, List<String> subjects) {
-        super(code, lastName, firstName, email, InfoQuizRole.TEACHER);
+    public Teacher(String lastName, String firstName, String email, List<String> subjects) {
+        super(lastName, firstName, email, InfoQuizRole.TEACHER);
+        this.subjects = subjects;
+    }
+
+    public Teacher(UUID uuid, String lastName, String firstName, String email, List<String> subjects) {
+        super(uuid, lastName, firstName, email, InfoQuizRole.TEACHER);
         this.subjects = subjects;
     }
 }

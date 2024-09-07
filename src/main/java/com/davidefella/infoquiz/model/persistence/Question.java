@@ -4,12 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.UUID;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Data
 @Entity
@@ -21,9 +19,9 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @Column(unique = true, nullable = false)
-    private String code;
+    @Setter(AccessLevel.NONE)
+    @Column(nullable = false, unique = true)
+    private UUID uuid;
 
     @ManyToOne
     @NotNull
@@ -33,10 +31,15 @@ public class Question {
     @JoinColumn(nullable = false)
     private String questionText;
 
-    public Question(String code, Evaluation evaluation, String questionText ) {
-        this.code = code;
+    public Question(Evaluation evaluation, String questionText ) {
+        this.uuid = UUID.randomUUID();
         this.evaluation = evaluation;
         this.questionText = questionText;
+    }
 
+    public Question(UUID uuid, Evaluation evaluation, String questionText ) {
+        this.uuid = uuid;
+        this.evaluation = evaluation;
+        this.questionText = questionText;
     }
 }
