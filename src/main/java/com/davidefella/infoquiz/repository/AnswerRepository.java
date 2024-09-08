@@ -11,8 +11,6 @@ import java.util.UUID;
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
-    //List<Answer> saveAll(List<Answer> answers);
-
     List<Answer> findByIsCorrectTrueAndQuestionEvaluationId(Long evaluationId);
 
     Optional<Answer> findByUuid(UUID uuid);

@@ -14,4 +14,5 @@ public interface UserInfoQuizRepository extends JpaRepository<UserInfoQuiz, Long
 
     List<Student> findByInfoQuizRole(InfoQuizRole role);
 
+    Optional<UserInfoQuiz> findByEmail(String email);
 }

@@ -1,4 +1,4 @@
-package com.davidefella.infoquiz.service.business;
+package com.davidefella.infoquiz.business.evaluationhandler;
 
 import com.davidefella.infoquiz.model.persistence.Answer;
 import com.davidefella.infoquiz.model.persistence.Evaluation;
@@ -8,8 +8,9 @@ import com.davidefella.infoquiz.service.AnswerService;
 import com.davidefella.infoquiz.service.EvaluationService;
 import com.davidefella.infoquiz.service.QuestionService;
 import com.davidefella.infoquiz.service.UserInfoQuizService;
-import com.davidefella.infoquiz.service.util.DummyTestDataFactory;
-import com.davidefella.infoquiz.service.util.UUIDRegistry;
+import com.davidefella.infoquiz.service.business.EvaluationHandler;
+import com.davidefella.infoquiz.util.DummyTestDataFactory;
+import com.davidefella.infoquiz.util.UUIDRegistry;
 import com.davidefella.infoquiz.utility.scoresettings.ScoreConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,7 +67,7 @@ public class EvaluationHandlerTest {
     void testAllAnswersWrong() {
         // Arrange
         Evaluation ev1 = evaluationService.findByUUID(UUIDRegistry.EVALUATION_1).orElseThrow(() -> new NoSuchElementException("Evaluation not found"));
-        Student st1 = userInfoQuizService.findStudentByLastNameAndFirstName("T_Cognome 1", "T_Nome 1").orElseThrow(() -> new NoSuchElementException("Student not found"));
+        Student st1 = userInfoQuizService.findStudentByLastNameAndFirstName("T_Cognome Studente 1", "T_Nome Studente 1").orElseThrow(() -> new NoSuchElementException("Student not found"));
 
         Answer a3 = answerService.findByUUID(UUIDRegistry.ANSWER_3_Q1).orElseThrow(() -> new NoSuchElementException(UUIDRegistry.ANSWER_3_Q1 + " not found"));
         Answer a4 = answerService.findByUUID(UUIDRegistry.ANSWER_1_Q2).orElseThrow(() -> new NoSuchElementException(UUIDRegistry.ANSWER_1_Q2 + " not found"));
@@ -88,7 +89,7 @@ public class EvaluationHandlerTest {
     void testAllAnswersCorrect() {
         // Arrange
         Evaluation ev1 = evaluationService.findByUUID(UUIDRegistry.EVALUATION_1).orElseThrow(() -> new NoSuchElementException("Evaluation not found"));
-        Student st1 = userInfoQuizService.findStudentByLastNameAndFirstName("T_Cognome 1", "T_Nome 1").orElseThrow(() -> new NoSuchElementException("Student not found"));
+        Student st1 = userInfoQuizService.findStudentByLastNameAndFirstName("T_Cognome Studente 1", "T_Nome Studente 1").orElseThrow(() -> new NoSuchElementException("Student not found"));
 
         Answer a1 = answerService.findByUUID(UUIDRegistry.ANSWER_1_Q1).orElseThrow(() -> new NoSuchElementException(UUIDRegistry.ANSWER_1_Q1 + " not found"));
         Answer a5 = answerService.findByUUID(UUIDRegistry.ANSWER_2_Q2).orElseThrow(() -> new NoSuchElementException(UUIDRegistry.ANSWER_2_Q2 + " not found"));
@@ -110,7 +111,7 @@ public class EvaluationHandlerTest {
     void testMixedAnswers_1() {
         // Arrange
         Evaluation ev1 = evaluationService.findByUUID(UUIDRegistry.EVALUATION_1).orElseThrow(() -> new NoSuchElementException("Evaluation not found"));
-        Student st1 = userInfoQuizService.findStudentByLastNameAndFirstName("T_Cognome 1", "T_Nome 1").orElseThrow(() -> new NoSuchElementException("Student not found"));
+        Student st1 = userInfoQuizService.findStudentByLastNameAndFirstName("T_Cognome Studente 1", "T_Nome Studente 1").orElseThrow(() -> new NoSuchElementException("Student not found"));
 
         Answer a1 = answerService.findByUUID(UUIDRegistry.ANSWER_1_Q1).orElseThrow(() -> new NoSuchElementException(UUIDRegistry.ANSWER_1_Q1 + " not found"));
         Answer a4 = answerService.findByUUID(UUIDRegistry.ANSWER_1_Q2).orElseThrow(() -> new NoSuchElementException(UUIDRegistry.ANSWER_1_Q2 + " not found"));
@@ -131,7 +132,7 @@ public class EvaluationHandlerTest {
     void testMixedAnswers_2() {
         // Arrange
         Evaluation ev1 = evaluationService.findByUUID(UUIDRegistry.EVALUATION_1).orElseThrow(() -> new NoSuchElementException("Evaluation not found"));
-        Student st1 = userInfoQuizService.findStudentByLastNameAndFirstName("T_Cognome 1", "T_Nome 1").orElseThrow(() -> new NoSuchElementException("Student not found"));
+        Student st1 = userInfoQuizService.findStudentByLastNameAndFirstName("T_Cognome Studente 1", "T_Nome Studente 1").orElseThrow(() -> new NoSuchElementException("Student not found"));
 
         Answer a2 = answerService.findByUUID(UUIDRegistry.ANSWER_2_Q1).orElseThrow(() -> new NoSuchElementException(UUIDRegistry.ANSWER_2_Q1 + " not found"));
         Answer a9 = answerService.findByUUID(UUIDRegistry.ANSWER_3_Q3).orElseThrow(() -> new NoSuchElementException(UUIDRegistry.ANSWER_3_Q3 + " not found"));
@@ -152,7 +153,7 @@ public class EvaluationHandlerTest {
     void testAllUnanswered() {
         // Arrange
         Evaluation ev1 = evaluationService.findByUUID(UUIDRegistry.EVALUATION_1).orElseThrow(() -> new NoSuchElementException("Evaluation not found"));
-        Student st1 = userInfoQuizService.findStudentByLastNameAndFirstName("T_Cognome 1", "T_Nome 1").orElseThrow(() -> new NoSuchElementException("Student not found"));
+        Student st1 = userInfoQuizService.findStudentByLastNameAndFirstName("T_Cognome Studente 1", "T_Nome Studente 1").orElseThrow(() -> new NoSuchElementException("Student not found"));
 
         List<Answer> unanswered = new ArrayList<>();
 

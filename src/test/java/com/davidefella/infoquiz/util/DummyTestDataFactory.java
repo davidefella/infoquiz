@@ -1,7 +1,8 @@
-package com.davidefella.infoquiz.service.util;
+package com.davidefella.infoquiz.util;
 
 import com.davidefella.infoquiz.model.persistence.*;
 import com.davidefella.infoquiz.model.persistence.users.Student;
+import com.davidefella.infoquiz.model.persistence.users.Teacher;
 import com.davidefella.infoquiz.model.persistence.users.UserInfoQuiz;
 import com.davidefella.infoquiz.service.*;
 import com.davidefella.infoquiz.service.business.EvaluationHandler;
@@ -48,15 +49,20 @@ public class DummyTestDataFactory {
     }
 
     public void loadUserData() {
-        List<UserInfoQuiz> userInfoQuizs = new ArrayList<>(List.of(new Student(UUIDRegistry.STUDENT_1, "T_Cognome 1", "T_Nome 1", "T_s1@email.com")));
+        List<UserInfoQuiz> userInfoQuizs = new ArrayList<>(List.of(
+                new Student(UUIDRegistry.STUDENT_1, "T_Cognome Studente 1", "T_Nome Studente 1", null, null),
+                new Teacher(UUIDRegistry.TEACHER_1, "F", "D", "fd@gmail.com", "ef@gmail.com", Arrays.asList("Java","Database")),
+                new Teacher(UUIDRegistry.TEACHER_2, "E", "S", "es@gmail.com", "es@gmail.com", List.of("JavaScript"))
+                ));
         userInfoQuizService.saveAll(userInfoQuizs);
-        logger.info("Loaded Students");
+
+        logger.info("Loaded users");
     }
 
     private void loadEvaluationData() {
         List<Evaluation> evaluations = List.of(
-                new Evaluation(UUIDRegistry.EVALUATION_1, "Evaluation 1", LocalDate.now(), "Evaluation per la classe di Test", null, true),
-                new Evaluation(UUIDRegistry.EVALUATION_2, "Evaluation 2", LocalDate.now(), "Evaluation vuota", null, true)
+                new Evaluation(UUIDRegistry.EVALUATION_1, "T Evaluation 1", LocalDate.now(), "T Evaluation per la classe di Test", null, true),
+                new Evaluation(UUIDRegistry.EVALUATION_2, "T Evaluation 2", LocalDate.now(), "T Evaluation vuota", null, true)
         );
 
         evaluationService.saveAll(evaluations);

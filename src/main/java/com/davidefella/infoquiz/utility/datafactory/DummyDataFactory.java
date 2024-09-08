@@ -2,6 +2,9 @@ package com.davidefella.infoquiz.utility.datafactory;
 
 import com.davidefella.infoquiz.model.persistence.*;
 import com.davidefella.infoquiz.model.persistence.users.Student;
+import com.davidefella.infoquiz.model.persistence.users.Teacher;
+import com.davidefella.infoquiz.model.persistence.users.UserInfoQuiz;
+import com.davidefella.infoquiz.model.persistence.users.role.InfoQuizRole;
 import com.davidefella.infoquiz.service.*;
 import com.davidefella.infoquiz.utility.DecimalRounder;
 import com.davidefella.infoquiz.utility.StartupDataLoader;
@@ -9,18 +12,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /* Classe che produce dati di test e li salva nel database.
  * Utile per test e demo
- *
  * */
 @Component
-@Deprecated
 public class DummyDataFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(StartupDataLoader.class);
@@ -52,16 +55,28 @@ public class DummyDataFactory {
     }
 
     private void loadUserData() {
-        List<Student> students = Arrays.asList(
-                new Student("Cognome 1", "Nome 1", "s1@email.com"),
-                new Student("Cognome 2", "Nome 2", "s2@email.com")
+        List<UserInfoQuiz> students = Arrays.asList(
+                new Student("Cognome 1", "Nome 1", null, null),
+                new Student("Cognome 2", "Nome 2", null, null)
         );
 
-        for (Student student : students) {
-            userInfoQuizService.save(student);
-        }
+        userInfoQuizService.saveAll(students);
 
-        logger.info("Loaded students");
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String rawPassword = "password";
+        String encodedPassword = encoder.encode(rawPassword);
+
+        logger.info("encodedPassword: " + encodedPassword);
+        System.out.println("encodedPassword: " + encodedPassword);
+
+
+        List<UserInfoQuiz> teachers = Arrays.asList(
+                new Teacher("F", "D", "fd@gmail.com", encodedPassword, new ArrayList<>(Arrays.asList("Java", "Database"))),
+
+                new Teacher("E", "S", "es@gmail.com", encodedPassword, new ArrayList<>(Arrays.asList("JavaScript")))
+        );
+
+        userInfoQuizService.saveAll(teachers);
     }
 
     private void loadEvaluationData() {

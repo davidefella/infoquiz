@@ -1,6 +1,5 @@
 package com.davidefella.infoquiz.service;
 
-import com.davidefella.infoquiz.model.factory.UserInfoQuizFactory;
 import com.davidefella.infoquiz.model.persistence.users.Student;
 import com.davidefella.infoquiz.model.persistence.users.UserInfoQuiz;
 import com.davidefella.infoquiz.model.persistence.users.role.InfoQuizRole;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -60,10 +58,4 @@ public class UserInfoQuizService {
     public List<UserInfoQuiz> saveAll(List<UserInfoQuiz> usersInfoQuiz) {
         return userInfoQuizRepository.saveAll(usersInfoQuiz);
     }
-
-    /* Utile per test e DataLoader */
-    public UserInfoQuiz save(UserInfoQuiz userInfoQuiz) {
-        return userInfoQuizRepository.save(userInfoQuiz);
-    }
-
 }

@@ -11,12 +11,12 @@ public class UserInfoQuizFactory {
 
     private UserInfoQuizFactory(){}
 
-    public static UserInfoQuiz createUser(String firstName, String lastName, String email, List<String> subjects, InfoQuizRole role) {
+    public static UserInfoQuiz createUser(String firstName, String lastName, String email, List<String> subjects, InfoQuizRole role, String password) {
         switch (role) {
             case STUDENT:
-                return new Student(lastName, firstName, email);
+                return new Student(lastName, firstName, email, password);
             case TEACHER:
-                return new Teacher(lastName, firstName, email, subjects);
+                return new Teacher(lastName, firstName, email, password, subjects);
             default:
                 throw new IllegalArgumentException("Invalid role: " + role);
         }

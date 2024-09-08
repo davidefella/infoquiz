@@ -1,4 +1,4 @@
-package com.davidefella.infoquiz.service.util;
+package com.davidefella.infoquiz.util;
 
 import java.util.UUID;
 
@@ -14,6 +14,10 @@ import java.util.UUID;
 public class UUIDRegistry {
 
     public static final UUID STUDENT_1 = UUID.fromString("a1000000-e89b-12d3-a456-426614174000");
+
+    public static final UUID TEACHER_1 = UUID.fromString("a2000000-e89b-12d3-a456-426614174000");
+    public static final UUID TEACHER_2 = UUID.fromString("a3000000-e89b-12d3-a456-426614174000");
+
 
     public static final UUID EVALUATION_1 = UUID.fromString("c1000000-e89b-12d3-a456-426614174000");
     public static final UUID EVALUATION_2 = UUID.fromString("c2000000-e89b-12d3-a456-426614174001");

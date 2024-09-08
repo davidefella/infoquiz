@@ -1,11 +1,7 @@
 package com.davidefella.infoquiz.model.persistence;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
-import java.util.List;
 import java.util.UUID;
-
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
