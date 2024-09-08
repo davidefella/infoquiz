@@ -66,10 +66,6 @@ public class DummyDataFactory {
         String rawPassword = "password";
         String encodedPassword = encoder.encode(rawPassword);
 
-        logger.info("encodedPassword: " + encodedPassword);
-        System.out.println("encodedPassword: " + encodedPassword);
-
-
         List<UserInfoQuiz> teachers = Arrays.asList(
                 new Teacher("F", "D", "fd@gmail.com", encodedPassword, new ArrayList<>(Arrays.asList("Java", "Database"))),
 

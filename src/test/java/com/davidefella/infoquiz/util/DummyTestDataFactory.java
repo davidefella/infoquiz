@@ -10,12 +10,14 @@ import com.davidefella.infoquiz.utility.StartupDataLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.*;
 
-
+@Profile("dev")
 @Component
 public class DummyTestDataFactory {
 
@@ -49,10 +51,14 @@ public class DummyTestDataFactory {
     }
 
     public void loadUserData() {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String rawPassword = "password";
+        String encodedPassword = encoder.encode(rawPassword);
+
         List<UserInfoQuiz> userInfoQuizs = new ArrayList<>(List.of(
                 new Student(UUIDRegistry.STUDENT_1, "T_Cognome Studente 1", "T_Nome Studente 1", null, null),
-                new Teacher(UUIDRegistry.TEACHER_1, "F", "D", "fd@gmail.com", "ef@gmail.com", Arrays.asList("Java","Database")),
-                new Teacher(UUIDRegistry.TEACHER_2, "E", "S", "es@gmail.com", "es@gmail.com", List.of("JavaScript"))
+                new Teacher(UUIDRegistry.TEACHER_1, "F", "D", "T_fd@gmail.com", encodedPassword, Arrays.asList("Java","Database")),
+                new Teacher(UUIDRegistry.TEACHER_2, "E", "S", "T_es@gmail.com", encodedPassword, List.of("JavaScript"))
                 ));
         userInfoQuizService.saveAll(userInfoQuizs);
 
