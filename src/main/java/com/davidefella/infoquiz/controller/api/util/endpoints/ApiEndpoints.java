@@ -7,5 +7,6 @@ public class ApiEndpoints {
     public static final String AUTH_TOKEN_V1 = "/api/auth/token";
 
     public static final String TEACHER_EVALUATIONS_V1 = BASE_API_V1 + "/teacher/evaluations";
+    public static final String TEACHER_CLASSROOMS_V1 = BASE_API_V1 + "/teacher/classrooms";
 
 }

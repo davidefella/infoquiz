@@ -1,8 +1,8 @@
 package com.davidefella.infoquiz.controller.api;
 
-import com.davidefella.infoquiz.authentication.dto.mapper.EvaluationMapper;
-import com.davidefella.infoquiz.authentication.dto.model.evaluation.EvaluationResponse;
-import com.davidefella.infoquiz.authentication.dto.model.evaluation.EvaluationResponseWrapper;
+import com.davidefella.infoquiz.model.web.evaluation.mapper.EvaluationMapper;
+import com.davidefella.infoquiz.model.web.evaluation.EvaluationResponse;
+import com.davidefella.infoquiz.model.web.evaluation.EvaluationResponseWrapper;
 import com.davidefella.infoquiz.controller.api.util.endpoints.ApiEndpoints;
 import com.davidefella.infoquiz.model.persistence.Evaluation;
 import com.davidefella.infoquiz.service.EvaluationService;
@@ -23,12 +23,9 @@ public class EvaluationController {
 
     private EvaluationService evaluationService;
 
-    private UserInfoQuizService userInfoQuizService;
-
     @Autowired
     public EvaluationController(EvaluationService evaluationService, UserInfoQuizService userInfoQuizService) {
         this.evaluationService = evaluationService;
-        this.userInfoQuizService = userInfoQuizService;
     }
 
     @PreAuthorize("hasRole('TEACHER')")
@@ -44,6 +41,6 @@ public class EvaluationController {
             dtoEvaluations.add(dto);
         }
 
-        return new EvaluationResponseWrapper(dtoEvaluations);  // Avvolgi le evaluation in un wrapper
+        return new EvaluationResponseWrapper(dtoEvaluations);
     }
 }

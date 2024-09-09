@@ -30,37 +30,57 @@ public class DummyTestDataFactory {
 
     private final QuestionService questionItemService;
     private final EvaluationHandler evaluationHandler;
+    private final ClassroomService classroomService;
 
     @Autowired
     public DummyTestDataFactory(AnswerService answerService, EvaluationService evaluationService,
                                 EvaluationStudentService evaluationStudentService, UserInfoQuizService userInfoQuizService,
-                                QuestionService questionItemService, EvaluationHandler evaluationHandler) {
+                                QuestionService questionItemService, EvaluationHandler evaluationHandler, ClassroomService classroomService) {
         this.answerService = answerService;
         this.evaluationService = evaluationService;
         this.evaluationStudentService = evaluationStudentService;
         this.userInfoQuizService = userInfoQuizService;
         this.questionItemService = questionItemService;
         this.evaluationHandler = evaluationHandler;
+        this.classroomService = classroomService;
     }
 
     public void loadAllDummyData() {
-        loadUserData();
+        loadUserAndClassroomsData();
         loadEvaluationData();
         loadQuestionData();
         loadAnswerData();
     }
 
-    public void loadUserData() {
+    public void loadUserAndClassroomsData() {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String rawPassword = "password";
-        String encodedPassword = encoder.encode(rawPassword);
+        String encodedPassword = encoder.encode("password");
+
+        List<Classroom> classrooms = Arrays.asList(
+                new Classroom("BLUE", "Empty Classroom", null, null),
+                new Classroom("YELLOW", "2 students", null, null),
+                new Classroom("ORANGE", "1 students", null, null)
+        );
+
+        classroomService.saveAll(classrooms);
 
         List<UserInfoQuiz> userInfoQuizs = new ArrayList<>(List.of(
-                new Student(UUIDRegistry.STUDENT_1, "T_Cognome Studente 1", "T_Nome Studente 1", null, null),
-                new Teacher(UUIDRegistry.TEACHER_1, "F", "D", "T_fd@gmail.com", encodedPassword, Arrays.asList("Java","Database")),
-                new Teacher(UUIDRegistry.TEACHER_2, "E", "S", "T_es@gmail.com", encodedPassword, List.of("JavaScript"))
-                ));
+                new Student(UUIDRegistry.STUDENT_1, "T_Cognome Studente 1", "T_Nome Studente 1", null, null, classrooms.get(1)),
+                new Student(UUIDRegistry.STUDENT_2, "T_Cognome Studente 2", "T_Nome Studente 2", null, null, classrooms.get(1)),
+                new Student(UUIDRegistry.STUDENT_3, "T_Cognome Studente 3", "T_Nome Studente 3", null, null, classrooms.get(2)),
+                new Teacher(UUIDRegistry.TEACHER_1, "F", "D", "T_fd@gmail.com", encodedPassword, Arrays.asList("Java", "Database")),
+                new Teacher(UUIDRegistry.TEACHER_2, "E", "S", "T_es@gmail.com", encodedPassword, List.of("JavaScript")),
+                new Teacher(UUIDRegistry.TEACHER_3, "T", "T", "T_test@gmail.com", encodedPassword, null)));
+
         userInfoQuizService.saveAll(userInfoQuizs);
+
+        classrooms.get(1).getTeachers().add((Teacher) userInfoQuizs.get(3));
+        classrooms.get(2).getTeachers().add((Teacher) userInfoQuizs.get(3));
+        classrooms.get(2).getTeachers().add((Teacher) userInfoQuizs.get(4));
+
+        userInfoQuizService.saveAll(Arrays.asList(userInfoQuizs.get(3), userInfoQuizs.get(4)));
+
+        classroomService.saveAll(classrooms);
 
         logger.info("Loaded users");
     }

@@ -1,4 +1,4 @@
-package com.davidefella.infoquiz.authentication.dto.model.evaluation;
+package com.davidefella.infoquiz.model.web.evaluation;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

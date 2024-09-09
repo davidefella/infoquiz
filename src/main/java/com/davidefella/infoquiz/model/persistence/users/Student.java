@@ -1,5 +1,6 @@
 package com.davidefella.infoquiz.model.persistence.users;
 
+import com.davidefella.infoquiz.model.persistence.Classroom;
 import com.davidefella.infoquiz.model.persistence.users.role.InfoQuizRole;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -14,11 +15,18 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = true)
 public class Student extends UserInfoQuiz {
 
-    public Student(String lastName, String firstName, String email, String password) {
+    @ManyToOne
+    private Classroom classroom;
+
+    public Student(String lastName, String firstName, String email, String password, Classroom classroom) {
         super(lastName, firstName, email, password, InfoQuizRole.STUDENT);
+        this.classroom = classroom;
     }
 
-    public Student(UUID uuid, String lastName, String firstName, String email, String password) {
+    public Student(UUID uuid, String lastName, String firstName, String email, String password, Classroom classroom) {
         super(uuid, lastName, firstName, email, password, InfoQuizRole.STUDENT);
+        this.classroom = classroom;
     }
+
+
 }

@@ -4,14 +4,12 @@ import com.davidefella.infoquiz.model.persistence.*;
 import com.davidefella.infoquiz.model.persistence.users.Student;
 import com.davidefella.infoquiz.model.persistence.users.Teacher;
 import com.davidefella.infoquiz.model.persistence.users.UserInfoQuiz;
-import com.davidefella.infoquiz.model.persistence.users.role.InfoQuizRole;
 import com.davidefella.infoquiz.service.*;
 import com.davidefella.infoquiz.utility.DecimalRounder;
 import com.davidefella.infoquiz.utility.StartupDataLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -33,20 +31,22 @@ public class DummyDataFactory {
     private final EvaluationStudentService evaluationStudentService;
     private final UserInfoQuizService userInfoQuizService;
     private final QuestionService questionItemService;
+    private final ClassroomService classroomService;
 
     @Autowired
     public DummyDataFactory(AnswerService answerService, EvaluationService evaluationService,
                             EvaluationStudentService evaluationStudentService, UserInfoQuizService userInfoQuizService,
-                            QuestionService questionItemService) {
+                            QuestionService questionItemService, ClassroomService classroomService) {
         this.answerService = answerService;
         this.evaluationService = evaluationService;
         this.evaluationStudentService = evaluationStudentService;
         this.userInfoQuizService = userInfoQuizService;
         this.questionItemService = questionItemService;
+        this.classroomService = classroomService;
     }
 
     public void loadAllDummyData() {
-        loadUserData();
+        loadUserAndClassroomsData();
         loadEvaluationData();
         loadEvaluationStudentData();
         loadQuestionData();
@@ -54,26 +54,40 @@ public class DummyDataFactory {
 
     }
 
-    private void loadUserData() {
-        List<UserInfoQuiz> students = Arrays.asList(
-                new Student("Cognome 1", "Nome 1", null, null),
-                new Student("Cognome 2", "Nome 2", null, null)
-        );
-
-        userInfoQuizService.saveAll(students);
-
+    private void loadUserAndClassroomsData() {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         String rawPassword = "password";
-        String encodedPassword = encoder.encode(rawPassword);
 
-        List<UserInfoQuiz> teachers = Arrays.asList(
-                new Teacher("F", "D", "fd@gmail.com", encodedPassword, new ArrayList<>(Arrays.asList("Java", "Database"))),
-
-                new Teacher("E", "S", "es@gmail.com", encodedPassword, new ArrayList<>(Arrays.asList("JavaScript")))
+        List<Classroom> classrooms = Arrays.asList(
+                new Classroom("BLUE", "BLue room", null, null),
+                new Classroom("YELLOW", "Yellow room", null, null),
+                new Classroom("ORANGE", "Orange room", null, null)
         );
 
-        userInfoQuizService.saveAll(teachers);
+        classroomService.saveAll(classrooms);
+
+        List<UserInfoQuiz> userInfoQuizs = new ArrayList<>(List.of(
+                new Student("Cognome 1", "Nome 1", null, null, classrooms.get(1)),
+                new Student("Cognome 2", "Nome 2", null, null, classrooms.get(1)),
+                new Student("Cognome 3", "Nome 3", null, null, classrooms.get(2)),
+                new Teacher("F", "D", "fd@gmail.com", encoder.encode(rawPassword), new ArrayList<>(Arrays.asList("Java", "Database"))),
+                new Teacher("E", "S", "es@gmail.com", encoder.encode(rawPassword), List.of("JavaScript")),
+                new Teacher("T", "T", "test@gmail.com", encoder.encode(rawPassword),  new ArrayList<>(Arrays.asList("JavaScript")))));
+
+
+        userInfoQuizService.saveAll(userInfoQuizs);
+
+        classrooms.get(1).getTeachers().add((Teacher) userInfoQuizs.get(3));
+        classrooms.get(2).getTeachers().add((Teacher) userInfoQuizs.get(3));
+        classrooms.get(2).getTeachers().add((Teacher) userInfoQuizs.get(4));
+
+        // Salva gli insegnanti
+        userInfoQuizService.saveAll(Arrays.asList(userInfoQuizs.get(3), userInfoQuizs.get(4)));
+
+        // Salva nuovamente le classi per sincronizzare il lato classroom-teachers
+        classroomService.saveAll(classrooms);
     }
+
 
     private void loadEvaluationData() {
         Teacher t1 = (Teacher) userInfoQuizService.findByEmail("fd@gmail.com").get();

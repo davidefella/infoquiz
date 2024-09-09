@@ -1,9 +1,11 @@
 package com.davidefella.infoquiz.model.persistence.users;
 
+import com.davidefella.infoquiz.model.persistence.Classroom;
 import com.davidefella.infoquiz.model.persistence.Evaluation;
 import com.davidefella.infoquiz.model.persistence.users.role.InfoQuizRole;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +24,8 @@ public class Teacher extends UserInfoQuiz{
     @OneToMany(mappedBy = "assignedTeacher")
     private List<Evaluation> evaluationsAssigned;
 
+    @ManyToMany(mappedBy = "teachers")
+    private List<Classroom> classrooms;
 
     public Teacher(String lastName, String firstName, String email, String password, List<String> subjects) {
         super(lastName, firstName, email, password, InfoQuizRole.ROLE_TEACHER);

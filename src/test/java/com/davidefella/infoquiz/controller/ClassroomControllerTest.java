@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-class EvaluationControllerTest {
+class ClassroomControllerTest {
 
     @Autowired
     MockMvc mvc;
@@ -38,29 +38,29 @@ class EvaluationControllerTest {
     }
 
     @Test
-    void testEvaluationsForTeacherWhenAuthenticatedThenReturnEvaluations() throws Exception {
+    void testClassroomsForTeacherWhenAuthenticatedThenReturnClassrooms() throws Exception {
         MvcResult authResult = mvc.perform(post(ApiEndpoints.AUTH_TOKEN_V1)
-                        .with(httpBasic("T_fd@gmail.com", "password")))
-                .andExpect(status().isOk())
-                .andReturn();
+                                  .with(httpBasic("T_fd@gmail.com", "password")))
+                                  .andExpect(status().isOk())
+                                  .andReturn();
 
         String token = TokenExtractor.extractTokenFromAuth(authResult);
 
         assertNotNull(token);
 
-        mvc.perform(get(ApiEndpoints.TEACHER_EVALUATIONS_V1)
+        mvc.perform(get(ApiEndpoints.TEACHER_CLASSROOMS_V1)
                         .header("Authorization", "Bearer " + token))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.evaluations[0].title").value("T Evaluation 1")) // Verifica il primo elemento nell'array 'evaluations'
-                .andExpect(jsonPath("$.evaluations[1].title").value("T Evaluation 2")) // Verifica il secondo elemento
-                .andReturn();
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$.classrooms[0].code").value("YELLOW"))
+                        .andExpect(jsonPath("$.classrooms[0].countStudents").value("2"))
+                        .andExpect(jsonPath("$.classrooms[1].code").value("ORANGE"))
+                        .andExpect(jsonPath("$.classrooms[1].countStudents").value("1"))
+                        .andReturn();
     }
 
-
     @Test
-    void testEvaluationsForTeacherWhenUnauthenticatedThenReturn401() throws Exception {
-        mvc.perform(get(ApiEndpoints.TEACHER_EVALUATIONS_V1))
+    void testClassroomsForTeacherWhenUnauthenticatedThenReturn401() throws Exception {
+        mvc.perform(get(ApiEndpoints.TEACHER_CLASSROOMS_V1))
                 .andExpect(status().isUnauthorized());
-
     }
 }
