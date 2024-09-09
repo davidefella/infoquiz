@@ -1,6 +1,5 @@
-package com.davidefella.infoquiz.authentication.dto.mapper.model;
+package com.davidefella.infoquiz.authentication.dto.model.evaluation;
 
-import com.davidefella.infoquiz.model.persistence.users.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

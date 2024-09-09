@@ -39,22 +39,25 @@ class EvaluationControllerTest {
 
     @Test
     void testEvaluationsForTeacherWhenAuthenticatedThenReturnEvaluations() throws Exception {
+        // Ottenimento del token
         MvcResult authResult = mvc.perform(post(ApiEndpoints.AUTH_TOKEN_V1)
-                                  .with(httpBasic("T_fd@gmail.com", "password")))
-                                  .andExpect(status().isOk())
-                                  .andReturn();
+                        .with(httpBasic("T_fd@gmail.com", "password")))
+                .andExpect(status().isOk())
+                .andReturn();
 
+        // Estrazione del token dal JSON
         String jsonResponse = authResult.getResponse().getContentAsString();
         ObjectMapper objectMapper = new ObjectMapper();
         String token = objectMapper.readTree(jsonResponse).get("token").asText();
 
         assertNotNull(token);
 
+        // Esegui la richiesta autenticata e verifica la struttura JSON con la root field 'evaluations'
         mvc.perform(get(ApiEndpoints.EVALUATIONS_V1)
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title").value("T Evaluation 1"))
-                .andExpect(jsonPath("$[1].title").value("T Evaluation 2"))
+                .andExpect(jsonPath("$.evaluations[0].title").value("T Evaluation 1")) // Verifica il primo elemento nell'array 'evaluations'
+                .andExpect(jsonPath("$.evaluations[1].title").value("T Evaluation 2")) // Verifica il secondo elemento
                 .andReturn();
     }
 

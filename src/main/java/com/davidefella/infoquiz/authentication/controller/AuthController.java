@@ -1,6 +1,6 @@
 package com.davidefella.infoquiz.authentication.controller;
 
-import com.davidefella.infoquiz.authentication.dto.mapper.AuthenticationResponse;
+import com.davidefella.infoquiz.authentication.dto.model.AuthenticationResponse;
 import com.davidefella.infoquiz.authentication.service.JwtService;
 import com.davidefella.infoquiz.controller.api.util.endpoints.ApiEndpoints;
 import org.slf4j.Logger;

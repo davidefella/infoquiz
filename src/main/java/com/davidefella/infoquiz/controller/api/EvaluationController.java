@@ -1,7 +1,8 @@
 package com.davidefella.infoquiz.controller.api;
 
 import com.davidefella.infoquiz.authentication.dto.mapper.EvaluationMapper;
-import com.davidefella.infoquiz.authentication.dto.mapper.model.EvaluationResponse;
+import com.davidefella.infoquiz.authentication.dto.model.evaluation.EvaluationResponse;
+import com.davidefella.infoquiz.authentication.dto.model.evaluation.EvaluationResponseWrapper;
 import com.davidefella.infoquiz.controller.api.util.endpoints.ApiEndpoints;
 import com.davidefella.infoquiz.model.persistence.Evaluation;
 import com.davidefella.infoquiz.service.EvaluationService;
@@ -32,17 +33,17 @@ public class EvaluationController {
 
     @PreAuthorize("hasRole('TEACHER')")
     @GetMapping(ApiEndpoints.EVALUATIONS_V1)
-    public List<EvaluationResponse> getEvaluationsForTeacher(Authentication authentication) {
+    public EvaluationResponseWrapper getEvaluationsForTeacher(Authentication authentication) {
         JwtAuthenticationToken jwtAuthToken = (JwtAuthenticationToken) authentication;
 
         List<Evaluation> evaluations = evaluationService.findByEmailAssignedTeacher(jwtAuthToken.getName());
 
-        List<EvaluationResponse> dtoEvaluationsList = new ArrayList<>();
+        List<EvaluationResponse> dtoEvaluations = new ArrayList<>();
         for (Evaluation evaluation : evaluations) {
             EvaluationResponse dto = EvaluationMapper.toDto(evaluation);
-            dtoEvaluationsList.add(dto);
+            dtoEvaluations.add(dto);
         }
 
-        return dtoEvaluationsList;
+        return new EvaluationResponseWrapper(dtoEvaluations);  // Avvolgi le evaluation in un wrapper
     }
 }
