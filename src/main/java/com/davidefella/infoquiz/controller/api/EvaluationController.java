@@ -32,7 +32,7 @@ public class EvaluationController {
     }
 
     @PreAuthorize("hasRole('TEACHER')")
-    @GetMapping(ApiEndpoints.EVALUATIONS_V1)
+    @GetMapping(ApiEndpoints.TEACHER_EVALUATIONS_V1)
     public EvaluationResponseWrapper getEvaluationsForTeacher(Authentication authentication) {
         JwtAuthenticationToken jwtAuthToken = (JwtAuthenticationToken) authentication;
 

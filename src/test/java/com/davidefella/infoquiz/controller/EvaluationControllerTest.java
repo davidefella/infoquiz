@@ -53,7 +53,7 @@ class EvaluationControllerTest {
         assertNotNull(token);
 
         // Esegui la richiesta autenticata e verifica la struttura JSON con la root field 'evaluations'
-        mvc.perform(get(ApiEndpoints.EVALUATIONS_V1)
+        mvc.perform(get(ApiEndpoints.TEACHER_EVALUATIONS_V1)
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.evaluations[0].title").value("T Evaluation 1")) // Verifica il primo elemento nell'array 'evaluations'
@@ -64,7 +64,7 @@ class EvaluationControllerTest {
 
     @Test
     void testEvaluationsForTeacherWhenUnauthenticatedThenReturn401() throws Exception {
-        mvc.perform(get(ApiEndpoints.EVALUATIONS_V1))
+        mvc.perform(get(ApiEndpoints.TEACHER_EVALUATIONS_V1))
                 .andExpect(status().isUnauthorized());
 
     }
