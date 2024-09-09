@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface UserInfoQuizRepository extends JpaRepository<UserInfoQuiz, Long> {
 
@@ -15,4 +16,7 @@ public interface UserInfoQuizRepository extends JpaRepository<UserInfoQuiz, Long
     List<Student> findByInfoQuizRole(InfoQuizRole role);
 
     Optional<UserInfoQuiz> findByEmail(String email);
+
+    Optional<UserInfoQuiz> findByUuid(UUID uuid);
+
 }

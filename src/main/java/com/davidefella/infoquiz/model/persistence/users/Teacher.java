@@ -24,12 +24,12 @@ public class Teacher extends UserInfoQuiz{
 
 
     public Teacher(String lastName, String firstName, String email, String password, List<String> subjects) {
-        super(lastName, firstName, email, password, InfoQuizRole.TEACHER);
+        super(lastName, firstName, email, password, InfoQuizRole.ROLE_TEACHER);
         this.subjects = subjects;
     }
 
     public Teacher(UUID uuid, String lastName, String firstName, String email, String password, List<String> subjects) {
-        super(uuid, lastName, firstName, email, password, InfoQuizRole.TEACHER);
+        super(uuid, lastName, firstName, email, password, InfoQuizRole.ROLE_TEACHER);
         this.subjects = subjects;
     }
 }

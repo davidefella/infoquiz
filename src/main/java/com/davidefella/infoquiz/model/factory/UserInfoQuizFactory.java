@@ -15,7 +15,7 @@ public class UserInfoQuizFactory {
         switch (role) {
             case STUDENT:
                 return new Student(lastName, firstName, email, password);
-            case TEACHER:
+            case ROLE_TEACHER:
                 return new Teacher(lastName, firstName, email, password, subjects);
             default:
                 throw new IllegalArgumentException("Invalid role: " + role);

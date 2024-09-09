@@ -1,4 +1,4 @@
-package com.davidefella.infoquiz.business.evaluationhandler;
+package com.davidefella.infoquiz.service.business.evaluationhandler;
 
 import com.davidefella.infoquiz.model.persistence.Answer;
 import com.davidefella.infoquiz.model.persistence.Evaluation;

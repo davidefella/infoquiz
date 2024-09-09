@@ -2,6 +2,7 @@ package com.davidefella.infoquiz.service;
 
 import com.davidefella.infoquiz.model.persistence.Evaluation;
 import com.davidefella.infoquiz.model.persistence.Question;
+import com.davidefella.infoquiz.model.persistence.users.Teacher;
 import com.davidefella.infoquiz.repository.EvaluationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,8 +48,12 @@ public class EvaluationService {
         return evaluationRepository.saveAll(evaluations);
     }
 
-    public List<Evaluation> findAllActiveEvaluations() {
-        return evaluationRepository.findByIsActiveTrue();
+    public List<Evaluation> findByAssignedTeacher(Teacher teacher) {
+        return evaluationRepository.findByAssignedTeacher(teacher);
+    }
+
+    public List<Evaluation> findByEmailAssignedTeacher(String email) {
+        return evaluationRepository.findByAssignedTeacherEmail(email);
     }
 
     public double calculateMaxScore(Long evaluationId) {

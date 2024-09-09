@@ -1,6 +1,7 @@
 package com.davidefella.infoquiz.repository;
 
 import com.davidefella.infoquiz.model.persistence.Evaluation;
+import com.davidefella.infoquiz.model.persistence.users.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +15,10 @@ public interface EvaluationRepository extends JpaRepository<Evaluation, Long> {
     List<Evaluation> findByIsActiveTrue();
 
     Optional<Evaluation> findByUuid(UUID uuid);
+
+    List<Evaluation> findByAssignedTeacher(Teacher assignedTeacher);
+
+    List<Evaluation> findByAssignedTeacherEmail(String email);
+
 }
 

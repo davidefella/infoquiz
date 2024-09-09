@@ -69,7 +69,10 @@ public abstract class UserInfoQuiz implements UserDetails {
         this.creationDateTime = LocalDateTime.now();
         this.infoQuizRole = infoQuizRole;
     }
-    // Implementazione di UserDetails
+
+    /*
+    * OVERRIDE PER MODULO SPRING SECURITY
+    * */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(infoQuizRole.name()));
@@ -108,4 +111,7 @@ public abstract class UserInfoQuiz implements UserDetails {
         // TODO: Implement custom logic for account enablement
         return true; // Stub
     }
+    /*
+     * OVERRIDE PER MODULO SPRING SECURITY
+     * */
 }

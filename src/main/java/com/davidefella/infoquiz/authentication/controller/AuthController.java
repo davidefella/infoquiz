@@ -1,16 +1,15 @@
 package com.davidefella.infoquiz.authentication.controller;
 
-import com.davidefella.infoquiz.authentication.dto.AuthenticationResponse;
+import com.davidefella.infoquiz.authentication.dto.mapper.AuthenticationResponse;
 import com.davidefella.infoquiz.authentication.service.JwtService;
+import com.davidefella.infoquiz.controller.api.util.endpoints.ApiEndpoints;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/auth")
 public class AuthController {
 
     private static final Logger LOG = LoggerFactory.getLogger(AuthController.class);
@@ -21,7 +20,7 @@ public class AuthController {
         this.tokenService = tokenService;
     }
 
-    @PostMapping("/token")
+    @PostMapping(ApiEndpoints.AUTH_TOKEN_V1)
     public AuthenticationResponse token(Authentication authentication) {
         String token = tokenService.generateToken(authentication);
         long expirationTime = tokenService.getExpirationTime();

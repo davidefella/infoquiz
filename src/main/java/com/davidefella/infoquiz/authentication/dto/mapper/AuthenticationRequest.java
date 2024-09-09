@@ -1,4 +1,4 @@
-package com.davidefella.infoquiz.authentication.dto;
+package com.davidefella.infoquiz.authentication.dto.mapper;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

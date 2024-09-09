@@ -66,9 +66,11 @@ public class DummyTestDataFactory {
     }
 
     private void loadEvaluationData() {
+        Teacher t1 = (Teacher) userInfoQuizService.findByUUID(UUIDRegistry.TEACHER_1).get();
+
         List<Evaluation> evaluations = List.of(
-                new Evaluation(UUIDRegistry.EVALUATION_1, "T Evaluation 1", LocalDate.now(), "T Evaluation per la classe di Test", null, true),
-                new Evaluation(UUIDRegistry.EVALUATION_2, "T Evaluation 2", LocalDate.now(), "T Evaluation vuota", null, true)
+                new Evaluation(UUIDRegistry.EVALUATION_1, "T Evaluation 1", LocalDate.now(), "T Evaluation per la classe di Test", t1, true),
+                new Evaluation(UUIDRegistry.EVALUATION_2, "T Evaluation 2", LocalDate.now(), "T Evaluation vuota", t1, true)
         );
 
         evaluationService.saveAll(evaluations);

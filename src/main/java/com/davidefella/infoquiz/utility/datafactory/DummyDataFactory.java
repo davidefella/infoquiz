@@ -76,11 +76,12 @@ public class DummyDataFactory {
     }
 
     private void loadEvaluationData() {
+        Teacher t1 = (Teacher) userInfoQuizService.findByEmail("fd@gmail.com").get();
 
         List<Evaluation> evaluations = Arrays.asList(
-                new Evaluation("Evaluation 1", LocalDate.now(), "Descrizione Evaluation 1", null, true),
-                new Evaluation("Evaluation 2", LocalDate.now().minusMonths(1), "Descrizione Evaluation 2", null, true),
-                new Evaluation("Evaluation 3", LocalDate.now().minusMonths(2), "Descrizione Evaluation 3", null, true)
+                new Evaluation("Evaluation 1", LocalDate.now(), "Descrizione Evaluation 1", t1, true),
+                new Evaluation("Evaluation 2", LocalDate.now().minusMonths(1), "Descrizione Evaluation 2", t1, true),
+                new Evaluation("Evaluation 3", LocalDate.now().minusMonths(2), "Descrizione Evaluation 3", t1, true)
         );
 
         for (Evaluation evaluation : evaluations) {

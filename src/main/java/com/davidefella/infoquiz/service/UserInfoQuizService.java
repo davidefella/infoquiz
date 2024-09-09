@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserInfoQuizService {
@@ -28,6 +29,10 @@ public class UserInfoQuizService {
         return userInfoQuizRepository.findById(id);
     }
 
+    public Optional<UserInfoQuiz> findByUUID(UUID uuid) {
+        return userInfoQuizRepository.findByUuid(uuid);
+    }
+
     public List<Student> findAllStudents() {
         return userInfoQuizRepository.findByInfoQuizRole(InfoQuizRole.STUDENT);
     }
@@ -35,6 +40,12 @@ public class UserInfoQuizService {
     public Optional<UserInfoQuiz> findByLastNameAndFirstName(String lastName, String firstName) {
         return userInfoQuizRepository.findByLastNameAndFirstName(lastName, firstName);
     }
+
+    public Optional<UserInfoQuiz> findByEmail(String email) {
+        return userInfoQuizRepository.findByEmail(email);
+    }
+
+
 
     public Optional<Student> findStudentByLastNameAndFirstName(String lastName, String firstName) {
         Optional<UserInfoQuiz> userInfoQuizOpt = userInfoQuizRepository.findByLastNameAndFirstName(lastName, firstName);

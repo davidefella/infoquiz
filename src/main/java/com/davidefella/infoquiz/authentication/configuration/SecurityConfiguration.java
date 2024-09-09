@@ -2,6 +2,7 @@ package com.davidefella.infoquiz.authentication.configuration;
 
 import java.util.List;
 
+import com.davidefella.infoquiz.authentication.converter.CustomJwtAuthenticationConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,21 +41,32 @@ import static org.springframework.security.config.Customizer.*;
 public class SecurityConfiguration {
 
     private final RsaKeyProperties jwtConfigProperties;
+    private CustomJwtAuthenticationConverter jwtAuthenticationConverter;
 
-    public SecurityConfiguration(RsaKeyProperties jwtConfigProperties) {
+    @Autowired
+    public SecurityConfiguration(RsaKeyProperties jwtConfigProperties, CustomJwtAuthenticationConverter jwtAuthenticationConverter) {
         this.jwtConfigProperties = jwtConfigProperties;
+        this.jwtAuthenticationConverter = jwtAuthenticationConverter; // Inizializza
     }
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"))) // TODO: For testing purpose
+                .headers(headers -> headers
+                        .frameOptions().disable()) // TODO: For testing purpose
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/h2-console/**").permitAll() // Consenti l'accesso alla console H2
+                        .anyRequest().authenticated()) // Tutti gli altri URL richiedono autenticazione
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-                .exceptionHandling(
-                        (ex) -> ex.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
-                                .accessDeniedHandler(new BearerTokenAccessDeniedHandler()))
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter)))  // Usa il convertitore personalizzato
+                .exceptionHandling(ex -> {
+                    ex.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint());
+                    ex.accessDeniedHandler(new BearerTokenAccessDeniedHandler());
+                })
                 .build();
     }
 
