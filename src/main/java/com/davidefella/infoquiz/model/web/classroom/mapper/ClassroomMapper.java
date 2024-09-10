@@ -8,7 +8,6 @@ import com.davidefella.infoquiz.model.web.students.StudentDTOResponse;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class ClassroomMapper {
 

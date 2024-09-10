@@ -22,14 +22,6 @@ public class UserInfoQuizService {
         this.userInfoQuizRepository = userInfoQuizRepository;
     }
 
-    public List<UserInfoQuiz> findAll() {
-        return userInfoQuizRepository.findAll();
-    }
-
-    public Optional<UserInfoQuiz> findById(Long id) {
-        return userInfoQuizRepository.findById(id);
-    }
-
     public Optional<UserInfoQuiz> findByUUID(UUID uuid) {
         return userInfoQuizRepository.findByUuid(uuid);
     }
@@ -49,17 +41,6 @@ public class UserInfoQuizService {
 
     public Optional<UserInfoQuiz> findByEmail(String email) {
         return userInfoQuizRepository.findByEmail(email);
-    }
-
-    public Optional<Teacher> findTeacherByLastNameAndFirstName(String lastName, String firstName) {
-        Optional<UserInfoQuiz> userInfoQuizOpt = userInfoQuizRepository.findByLastNameAndFirstName(lastName, firstName);
-
-        Optional<UserInfoQuiz> userTmp = findUserByLastNameAndFirstName(lastName, firstName);
-
-        if (userTmp.isEmpty() || !(userTmp.get() instanceof Teacher ))
-            return Optional.empty();
-
-        return Optional.of((Teacher) userTmp.get());
     }
 
     public Optional<Student> findStudentByLastNameAndFirstName(String lastName, String firstName) {

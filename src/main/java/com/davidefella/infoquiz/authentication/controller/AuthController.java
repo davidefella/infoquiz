@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AuthController.class);
-
     private final JwtService tokenService;
 
     public AuthController(JwtService tokenService) {
@@ -25,8 +23,6 @@ public class AuthController {
         String token = tokenService.generateToken(authentication);
         long expirationTime = tokenService.getExpirationTime();
 
-        // Ritorna un oggetto AuthenticationResponse con token e tempo di scadenza
         return new AuthenticationResponse(token, expirationTime);
-
     }
 }

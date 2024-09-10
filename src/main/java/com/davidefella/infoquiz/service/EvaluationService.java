@@ -28,16 +28,12 @@ public class EvaluationService {
         this.scoreConfiguration = scoreConfiguration;
     }
 
-    public List<Evaluation> findAll() {
-        return evaluationRepository.findAll();
-    }
-
-    public Optional<Evaluation> findById(Long id) {
-        return evaluationRepository.findById(id);
-    }
-
     public Optional<Evaluation> findByUUID(UUID uuid) {
         return evaluationRepository.findByUuid(uuid);
+    }
+
+    public List<Evaluation> findAll() {
+        return evaluationRepository.findAll();
     }
 
     public Evaluation save(Evaluation evaluation) {
@@ -52,13 +48,9 @@ public class EvaluationService {
         return evaluationRepository.findByAssignedTeacher(teacher);
     }
 
+    //TODO: RIfattorizzare, passare l'oggetto
     public List<Evaluation> findByEmailAssignedTeacher(String email) {
         return evaluationRepository.findByAssignedTeacherEmail(email);
-    }
-
-    public double calculateMaxScore(Long evaluationId) {
-        List<Question> questions = questionService.findByEvaluationId(evaluationId);
-        return questions.size() * scoreConfiguration.getBonusPoints();
     }
 
 }

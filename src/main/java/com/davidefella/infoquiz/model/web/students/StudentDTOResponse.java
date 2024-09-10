@@ -3,7 +3,6 @@ package com.davidefella.infoquiz.model.web.students;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 @Data

@@ -3,6 +3,7 @@ package com.davidefella.infoquiz.model.persistence;
 import jakarta.persistence.*;
 import java.util.UUID;
 import jakarta.validation.constraints.NotNull;
+
 import lombok.*;
 
 @Data

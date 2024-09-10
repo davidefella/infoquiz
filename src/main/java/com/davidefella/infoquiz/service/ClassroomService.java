@@ -24,6 +24,10 @@ public class ClassroomService {
         this.userInfoQuizService = userInfoQuizService;
     }
 
+    public Optional<Classroom> findByUUID(UUID uuid){
+        return classroomRepository.findByUuid(uuid);
+    }
+
     public List<Classroom> saveAll(List<Classroom> classrooms) {
         return classroomRepository.saveAll(classrooms);
     }
@@ -37,10 +41,4 @@ public class ClassroomService {
 
         return classroomRepository.findByTeachers(teacherOpt.get());
     }
-
-    public Optional<Classroom> findByUUID(UUID uuid){
-        return classroomRepository.findByUuid(uuid);
-    }
 }
-
-

@@ -32,6 +32,7 @@ public class JwtService {
         String scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
+
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(now)
@@ -39,10 +40,11 @@ public class JwtService {
                 .subject(authentication.getName())
                 .claim("scope", scope)
                 .build();
+
         return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
 
     public long getExpirationTime() {
-        return jwtExpiration;  // Ritorna il tempo di scadenza in millisecondi
+        return jwtExpiration;
     }
 }

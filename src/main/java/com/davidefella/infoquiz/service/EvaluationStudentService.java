@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EvaluationStudentService {
@@ -18,23 +17,13 @@ public class EvaluationStudentService {
         this.evaluationStudentRepository = evaluationStudentRepository;
     }
 
-    public List<EvaluationStudent> findAll() {
-        return evaluationStudentRepository.findAll();
-    }
-
-    public Optional<EvaluationStudent> findById(Long id) {
-        return evaluationStudentRepository.findById(id);
+    //TODO: Convertire con UUID
+    public List<EvaluationStudent> findByEvaluationId(Long evaluationId){
+        return evaluationStudentRepository.findByEvaluationId(evaluationId);
     }
 
     public EvaluationStudent save(EvaluationStudent evaluationStudent) {
         return evaluationStudentRepository.save(evaluationStudent);
     }
 
-    public List<EvaluationStudent> findByEvaluationId(Long evaluationId){
-        return evaluationStudentRepository.findByEvaluationId(evaluationId);
-    }
-
-    public void deleteById(Long id) {
-        evaluationStudentRepository.deleteById(id);
-    }
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+// TODO: Rirfare o Rifattorizzare?
 @Component
 public class ExcelReportGenerator {
 
@@ -64,5 +65,4 @@ public class ExcelReportGenerator {
 
         }
     }
-
 }

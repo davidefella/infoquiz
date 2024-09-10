@@ -35,12 +35,13 @@ public class EvaluationController {
 
         List<Evaluation> evaluations = evaluationService.findByEmailAssignedTeacher(jwtAuthToken.getName());
 
-        List<EvaluationDTOResponse> dtoEvaluations = new ArrayList<>();
+        List<EvaluationDTOResponse> dtoResponses = new ArrayList<>();
+        EvaluationDTOResponse dto = null;
+
         for (Evaluation evaluation : evaluations) {
-            EvaluationDTOResponse dto = EvaluationMapper.toEvaluationDto(evaluation);
-            dtoEvaluations.add(dto);
+            dtoResponses.add(EvaluationMapper.toEvaluationDto(evaluation));
         }
 
-        return new EvaluationDTOResponseWrapper(dtoEvaluations);
+        return new EvaluationDTOResponseWrapper(dtoResponses);
     }
 }

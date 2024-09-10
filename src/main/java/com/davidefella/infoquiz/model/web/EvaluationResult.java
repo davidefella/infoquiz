@@ -5,10 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/*
- * Modello che non è persistente, serve per passare all'ultima pagina un
- * riepilogo sul punteggio del giocatore
- * */
 @Getter
 @Setter
 @NoArgsConstructor

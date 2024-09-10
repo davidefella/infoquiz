@@ -34,14 +34,14 @@ public class Classroom {
     private List<Student> students;
 
     @ManyToMany
-    private List<Teacher> teachers = new ArrayList<>();  // Inizializzazione della lista
+    private List<Teacher> teachers = new ArrayList<>();
 
     public Classroom(UUID uuid, String code, String name, List<Student> students, List<Teacher> teachers) {
         this.uuid = uuid;
         this.code = code;
         this.name = name;
         this.students = students;
-        this.teachers = teachers != null ? teachers : new ArrayList<>();  // Assicurati che non sia null
+        this.teachers = teachers != null ? teachers : new ArrayList<>();
     }
 
     public Classroom(String code, String name, List<Student> students, List<Teacher> teachers) {
@@ -49,7 +49,7 @@ public class Classroom {
         this.code = code;
         this.name = name;
         this.students = students;
-        this.teachers = teachers != null ? teachers : new ArrayList<>();  // Assicurati che non sia null
+        this.teachers = teachers != null ? teachers : new ArrayList<>();
     }
 
 }

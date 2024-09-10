@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+// TODO: Rifare o Rifattorizzare?
 @Service
 public class EvaluationHandler {
 
@@ -23,8 +24,6 @@ public class EvaluationHandler {
 
     private AnswerService answerService;
 
-    private UserInfoQuizService studentService;
-
     private EvaluationService evaluationService;
 
     private QuestionService questionService;
@@ -32,10 +31,9 @@ public class EvaluationHandler {
     private ScoreConfiguration scoreConfiguration;
 
     @Autowired
-    public EvaluationHandler(EvaluationStudentService evaluationStudentService, AnswerService answerService, UserInfoQuizService studentService, EvaluationService evaluationService, QuestionService questionService, ScoreConfiguration scoreConfiguration) {
+    public EvaluationHandler(EvaluationStudentService evaluationStudentService, AnswerService answerService, EvaluationService evaluationService, QuestionService questionService, ScoreConfiguration scoreConfiguration) {
         this.evaluationStudentService = evaluationStudentService;
         this.answerService = answerService;
-        this.studentService = studentService;
         this.evaluationService = evaluationService;
         this.questionService = questionService;
         this.scoreConfiguration = scoreConfiguration;

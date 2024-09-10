@@ -19,16 +19,13 @@ public class AnswerService {
         this.answerRepository = answerRepository;
     }
 
-    public List<Answer> findAll() {
-        return answerRepository.findAll();
-    }
-
-    public Optional<Answer> findById(Long id) {
-        return answerRepository.findById(id);
-    }
-
     public Optional<Answer> findByUUID(UUID uuid) {
         return answerRepository.findByUuid(uuid);
+    }
+
+    //TODO: Rimuovere
+    public Optional<Answer> findById(Long id) {
+        return answerRepository.findById(id);
     }
 
     public Answer save(Answer answer) {
@@ -39,14 +36,6 @@ public class AnswerService {
         return answerRepository.saveAll(answers);
     }
 
-
-    public void deleteById(Long id) {
-        answerRepository.deleteById(id);
-    }
-
-    public List<Answer> getAllCorrectAnswerByEvaluationID(long evaluationID){
-        return answerRepository.findByIsCorrectTrueAndQuestionEvaluationId(evaluationID);
-    }
 }
 
 

@@ -40,11 +40,4 @@ public class EvaluationStudent {
         this.student = student;
         this.score = score;
     }
-
-    public EvaluationStudent(UUID uuid, Evaluation evaluation, Student student, double score) {
-        this.uuid = uuid;
-        this.evaluation = evaluation;
-        this.student = student;
-        this.score = score;
-    }
 }

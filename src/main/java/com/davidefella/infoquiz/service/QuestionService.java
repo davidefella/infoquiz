@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.List;
-import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,30 +19,16 @@ public class QuestionService {
         this.questionRepository = questionRepository;
     }
 
-    public List<Question> findAll() {
-        return questionRepository.findAll();
-    }
-
-    public Optional<Question> findById(Long id) {
-        return questionRepository.findById(id);
-    }
-
     public Optional<Question> findByUUID(UUID uuid) {
         return questionRepository.findByUuid(uuid);
     }
 
-    public List<Question> findByEvaluationIdRandomized(Long evaluationId) {
-        List<Question> questions = findByEvaluationId(evaluationId);
-        Collections.shuffle(questions); // Randomizza le domande
-        return questions;
-    }
-
-    public List<Question> findByEvaluationId(Long evaluationId) {
-        return questionRepository.findByEvaluationId(evaluationId);
-    }
-
     public Optional<List<Question>> findByEvaluationUUID(UUID uuid) {
         return questionRepository.findByEvaluationUuid(uuid);
+    }
+
+    public List<Question> findAll() {
+        return questionRepository.findAll();
     }
 
     public Question save(Question questionItem) {

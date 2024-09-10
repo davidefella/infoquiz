@@ -11,12 +11,13 @@ import java.util.UUID;
 
 public interface UserInfoQuizRepository extends JpaRepository<UserInfoQuiz, Long> {
 
-    Optional<UserInfoQuiz> findByLastNameAndFirstName(String lastName, String firstName);
+    Optional<UserInfoQuiz> findByUuid(UUID uuid);
 
     List<Student> findByInfoQuizRole(InfoQuizRole role);
 
+    // TODO: Serve?
+    Optional<UserInfoQuiz> findByLastNameAndFirstName(String lastName, String firstName);
+
+    // TODO: Serve?
     Optional<UserInfoQuiz> findByEmail(String email);
-
-    Optional<UserInfoQuiz> findByUuid(UUID uuid);
-
 }

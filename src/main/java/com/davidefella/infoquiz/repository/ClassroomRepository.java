@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface ClassroomRepository extends JpaRepository<Classroom, Long> {
 
-    List<Classroom> findByTeachers(Teacher teacher);
-
     Optional<Classroom> findByUuid(UUID uuid);
+
+    List<Classroom> findByTeachers(Teacher teacher);
 }
