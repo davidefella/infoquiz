@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class EvaluationResponse {
+public class EvaluationDTOResponse {
 
     private UUID uuidAssignedTeacher;
     private LocalDate evaluationDate;

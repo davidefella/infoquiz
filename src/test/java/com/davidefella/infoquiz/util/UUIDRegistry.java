@@ -41,9 +41,9 @@ public class UUIDRegistry {
     public static final UUID ANSWER_2_Q3 = UUID.fromString("e8000000-e89b-12d3-a456-42661417400c");
     public static final UUID ANSWER_3_Q3 = UUID.fromString("e9000000-e89b-12d3-a456-42661417400d");
 
-    public static final UUID CLASSROOM_1 = UUID.fromString("b1000000-e89b-12d3-a456-42661417400d");
-    public static final UUID CLASSROOM_2 = UUID.fromString("b2000000-e89b-12d3-a456-42661417400d");
-    public static final UUID CLASSROOM_3 = UUID.fromString("b3000000-e89b-12d3-a456-42661417400d");
+    public static final UUID CLASSROOM_1_BLUE = UUID.fromString("b1000000-e89b-12d3-a456-42661417400d");
+    public static final UUID CLASSROOM_2_YELLOW = UUID.fromString("b2000000-e89b-12d3-a456-42661417400d");
+    public static final UUID CLASSROOM_3_ORANGE = UUID.fromString("b3000000-e89b-12d3-a456-42661417400d");
 
 
 }

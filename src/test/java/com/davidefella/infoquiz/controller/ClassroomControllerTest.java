@@ -3,6 +3,7 @@ package com.davidefella.infoquiz.controller;
 import com.davidefella.infoquiz.controller.api.util.endpoints.ApiEndpoints;
 import com.davidefella.infoquiz.util.DummyTestDataFactory;
 import com.davidefella.infoquiz.util.TokenExtractor;
+import com.davidefella.infoquiz.util.UUIDRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,32 @@ class ClassroomControllerTest {
     @Test
     void testClassroomsForTeacherWhenUnauthenticatedThenReturn401() throws Exception {
         mvc.perform(get(ApiEndpoints.TEACHER_CLASSROOMS_V1))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void testGetStudentsByClassroomUuidWhenAuthenticatedThenReturnStudents() throws Exception {
+        MvcResult authResult = mvc.perform(post(ApiEndpoints.AUTH_TOKEN_V1)
+                        .with(httpBasic("T_fd@gmail.com", "password")))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String token = TokenExtractor.extractTokenFromAuth(authResult);
+        assertNotNull(token);
+
+        mvc.perform(get(ApiEndpoints.TEACHER_CLASSROOMS_V1)
+                        .header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.classrooms[0].code").value("YELLOW"))
+                .andExpect(jsonPath("$.classrooms[0].countStudents").value("2"))  // Verifica il numero di studenti
+                .andExpect(jsonPath("$.classrooms[1].code").value("ORANGE"))
+                .andExpect(jsonPath("$.classrooms[1].countStudents").value("1"))  // Verifica il numero di studenti
+                .andReturn();
+    }
+
+    @Test
+    void testGetStudentsByClassroomUuidWhenUnauthenticatedThenReturn401() throws Exception {
+        mvc.perform(get(ApiEndpoints.TEACHER_CLASSROOMS_V1 + "/" + UUIDRegistry.CLASSROOM_2_YELLOW))
                 .andExpect(status().isUnauthorized());
     }
 }

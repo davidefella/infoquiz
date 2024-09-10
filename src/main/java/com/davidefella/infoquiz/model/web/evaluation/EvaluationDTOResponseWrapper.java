@@ -7,6 +7,6 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class EvaluationResponseWrapper {
-    private List<EvaluationResponse> evaluations;
+public class EvaluationDTOResponseWrapper {
+    private List<EvaluationDTOResponse> evaluations;
 }

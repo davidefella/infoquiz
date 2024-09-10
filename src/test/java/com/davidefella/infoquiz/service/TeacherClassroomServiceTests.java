@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.davidefella.infoquiz.util.UUIDRegistry;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -36,17 +36,13 @@ class TeacherClassroomServiceTests {
 
     @Test
     void testFindByTeacherClassrooms() {
-        // Trova il docente tramite email
         Teacher teacherT1 = (Teacher) userInfoQuizService.findByEmail("T_fd@gmail.com").get();
 
-        // Recupera le classi assegnate al docente
         List<Classroom> classrooms = classroomService.findClassroomsByTeacherEmail(teacherT1.getEmail());
 
-        // Verifica che non sia null e che la lista non sia vuota
         assertNotNull(classrooms);
         assertFalse(classrooms.isEmpty());
 
-        // Verifica il numero e i dettagli delle classi assegnate
         assertEquals(2, classrooms.size());  // T_fd ha 2 classi
 
         assertEquals("YELLOW", classrooms.get(0).getCode());
@@ -58,15 +54,35 @@ class TeacherClassroomServiceTests {
 
     @Test
     void testFindByTeacherNoClassrooms() {
-        // Trova il docente tramite email
         Teacher teacherT2 = (Teacher) userInfoQuizService.findByEmail("T_es@gmail.com").get();
 
-        // Recupera le classi assegnate al docente (T_es ha 1 classe)
         List<Classroom> classrooms = classroomService.findClassroomsByTeacherEmail(teacherT2.getEmail());
 
-        // Verifica che la lista non sia null ma sia vuota
         assertNotNull(classrooms);
         assertEquals(1, classrooms.size());
         assertEquals("ORANGE", classrooms.get(0).getCode());
+    }
+
+    @Test
+    void testFindStudentsByClassroomUuid() {
+        Classroom classroom = classroomService.findByUUID(UUIDRegistry.CLASSROOM_2_YELLOW).orElseThrow();
+
+        assertNotNull(classroom);
+        assertEquals("YELLOW", classroom.getCode());
+
+        assertNotNull(classroom.getStudents());
+        assertEquals(2, classroom.getStudents().size());
+
+        assertEquals("T_Cognome Studente 1", classroom.getStudents().get(0).getLastName());
+        assertEquals("T_Cognome Studente 2", classroom.getStudents().get(1).getLastName());
+    }
+
+    @Test
+    void testFindEmptyClassroomStudents() {
+        Classroom classroom = classroomService.findByUUID(UUIDRegistry.CLASSROOM_1_BLUE).orElseThrow();
+
+        assertNotNull(classroom);
+        assertEquals("BLUE", classroom.getCode());
+        assertTrue(classroom.getStudents().isEmpty());
     }
 }

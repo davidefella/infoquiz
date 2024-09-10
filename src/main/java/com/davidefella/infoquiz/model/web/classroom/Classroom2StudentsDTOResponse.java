@@ -1,16 +1,16 @@
 package com.davidefella.infoquiz.model.web.classroom;
 
+import com.davidefella.infoquiz.model.web.students.StudentDTOResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class ClassroomResponse {
+public class Classroom2StudentsDTOResponse {
 
     private UUID uuid;
-    private String code;
-    private String name;
-    private String countStudents;
+    private List<StudentDTOResponse> students;
 }

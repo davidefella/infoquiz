@@ -57,9 +57,9 @@ public class DummyTestDataFactory {
         String encodedPassword = encoder.encode("password");
 
         List<Classroom> classrooms = Arrays.asList(
-                new Classroom("BLUE", "Empty Classroom", null, null),
-                new Classroom("YELLOW", "2 students", null, null),
-                new Classroom("ORANGE", "1 students", null, null)
+                new Classroom(UUIDRegistry.CLASSROOM_1_BLUE, "BLUE", "Empty Classroom", null, null),
+                new Classroom(UUIDRegistry.CLASSROOM_2_YELLOW, "YELLOW", "2 students", null, null),
+                new Classroom(UUIDRegistry.CLASSROOM_3_ORANGE, "ORANGE", "1 students", null, null)
         );
 
         classroomService.saveAll(classrooms);

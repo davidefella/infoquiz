@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ClassroomService {
@@ -35,6 +36,10 @@ public class ClassroomService {
         }
 
         return classroomRepository.findByTeachers(teacherOpt.get());
+    }
+
+    public Optional<Classroom> findByUUID(UUID uuid){
+        return classroomRepository.findByUuid(uuid);
     }
 }
 
