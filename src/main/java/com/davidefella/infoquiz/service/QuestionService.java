@@ -13,22 +13,10 @@ import java.util.UUID;
 @Service
 public class QuestionService {
 
-    private QuestionRepository questionRepository;
+    private final QuestionRepository questionRepository;
 
     public QuestionService(QuestionRepository questionRepository) {
         this.questionRepository = questionRepository;
-    }
-
-    public Optional<Question> findByUUID(UUID uuid) {
-        return questionRepository.findByUuid(uuid);
-    }
-
-    public Optional<List<Question>> findByEvaluationUUID(UUID uuid) {
-        return questionRepository.findByEvaluationUuid(uuid);
-    }
-
-    public List<Question> findAll() {
-        return questionRepository.findAll();
     }
 
     public Question save(Question questionItem) {
@@ -45,4 +33,13 @@ public class QuestionService {
 
         return questionRepository.saveAll(questions);
     }
+
+    public List<Question> findAll() {
+        return questionRepository.findAll();
+    }
+
+    public Optional<Question> findByUUID(UUID uuid) {
+        return questionRepository.findByUuid(uuid);
+    }
+
 }

@@ -98,17 +98,13 @@ public class DummyDataFactory {
                 new Evaluation("Evaluation 3", LocalDate.now().minusMonths(2), "Descrizione Evaluation 3", t1, true)
         );
 
-        for (Evaluation evaluation : evaluations) {
-            evaluationService.save(evaluation);
-        }
+        evaluationService.saveAll(evaluations);
 
         logger.info("Loaded evaluations");
     }
 
     private void loadQuestionData() {
-        List<Evaluation> evaluations = evaluationService.findAll();
-
-        for (Evaluation evaluation : evaluations) {
+        for (Evaluation evaluation : evaluationService.findAll()) {
             List<Question> questions = Arrays.asList(
                     new Question(evaluation, "Question 1 ?"),
                     new Question(evaluation, "Question 2 ?"),
@@ -137,9 +133,8 @@ public class DummyDataFactory {
                     new Answer(question, "answer 4 ", false)
             );
 
-            for (Answer answer : answers) {
-                answerService.save(answer);
-            }
+            answerService.saveAll(answers);
+
         }
 
         logger.info("Loaded answers");

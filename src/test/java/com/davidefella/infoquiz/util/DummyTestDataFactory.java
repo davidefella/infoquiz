@@ -5,7 +5,6 @@ import com.davidefella.infoquiz.model.persistence.users.Student;
 import com.davidefella.infoquiz.model.persistence.users.Teacher;
 import com.davidefella.infoquiz.model.persistence.users.UserInfoQuiz;
 import com.davidefella.infoquiz.service.*;
-import com.davidefella.infoquiz.service.business.EvaluationHandler;
 import com.davidefella.infoquiz.utility.StartupDataLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,19 +28,17 @@ public class DummyTestDataFactory {
     private final UserInfoQuizService userInfoQuizService;
 
     private final QuestionService questionItemService;
-    private final EvaluationHandler evaluationHandler;
     private final ClassroomService classroomService;
 
     @Autowired
     public DummyTestDataFactory(AnswerService answerService, EvaluationService evaluationService,
                                 EvaluationStudentService evaluationStudentService, UserInfoQuizService userInfoQuizService,
-                                QuestionService questionItemService, EvaluationHandler evaluationHandler, ClassroomService classroomService) {
+                                QuestionService questionItemService,ClassroomService classroomService) {
         this.answerService = answerService;
         this.evaluationService = evaluationService;
         this.evaluationStudentService = evaluationStudentService;
         this.userInfoQuizService = userInfoQuizService;
         this.questionItemService = questionItemService;
-        this.evaluationHandler = evaluationHandler;
         this.classroomService = classroomService;
     }
 

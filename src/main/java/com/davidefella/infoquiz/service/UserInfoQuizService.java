@@ -15,11 +15,15 @@ import java.util.UUID;
 @Service
 public class UserInfoQuizService {
 
-    private UserInfoQuizRepository userInfoQuizRepository;
+    private final UserInfoQuizRepository userInfoQuizRepository;
 
     @Autowired
     public UserInfoQuizService(UserInfoQuizRepository userInfoQuizRepository) {
         this.userInfoQuizRepository = userInfoQuizRepository;
+    }
+
+    public List<UserInfoQuiz> saveAll(List<UserInfoQuiz> usersInfoQuiz) {
+        return userInfoQuizRepository.saveAll(usersInfoQuiz);
     }
 
     public Optional<UserInfoQuiz> findByUUID(UUID uuid) {
@@ -31,11 +35,12 @@ public class UserInfoQuizService {
     }
 
     public Optional<Teacher> findTeacherByEmail(String email) {
-        Optional<UserInfoQuiz> user = userInfoQuizRepository.findByEmail(email);
+        Optional<UserInfoQuiz> userInfoQuizOpt = userInfoQuizRepository.findByEmail(email);
 
-        if (user.isPresent() && user.get() instanceof Teacher) {
-            return Optional.of((Teacher) user.get());
+        if (userInfoQuizOpt.isPresent() && userInfoQuizOpt.get() instanceof Teacher) {
+            return Optional.of((Teacher) userInfoQuizOpt.get());
         }
+
         return Optional.empty();
     }
 
@@ -43,30 +48,5 @@ public class UserInfoQuizService {
         return userInfoQuizRepository.findByEmail(email);
     }
 
-    public Optional<Student> findStudentByLastNameAndFirstName(String lastName, String firstName) {
 
-        Optional<UserInfoQuiz> userTmp = findUserByLastNameAndFirstName(lastName, firstName);
-
-        if (userTmp.isEmpty() || !(userTmp.get() instanceof Student ))
-            return Optional.empty();
-
-        return Optional.of((Student) userTmp.get());
-    }
-
-    private Optional<UserInfoQuiz> findUserByLastNameAndFirstName(String lastName, String firstName){
-        Optional<UserInfoQuiz> userInfoQuizOpt = userInfoQuizRepository.findByLastNameAndFirstName(lastName, firstName);
-
-        if (userInfoQuizOpt.isEmpty()) {
-            return Optional.empty();
-        }
-
-        return userInfoQuizOpt;
-    }
-
-    /*
-     * TODO: Add check fields
-     * */
-    public List<UserInfoQuiz> saveAll(List<UserInfoQuiz> usersInfoQuiz) {
-        return userInfoQuizRepository.saveAll(usersInfoQuiz);
-    }
 }

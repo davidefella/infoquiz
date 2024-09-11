@@ -1,6 +1,7 @@
 package com.davidefella.infoquiz.exception.global;
 
 import com.davidefella.infoquiz.exception.DuplicateUUIDException;
+import com.davidefella.infoquiz.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,5 +18,11 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> handleDuplicateUUIDException(DuplicateUUIDException ex) {
         ApiError apiError = new ApiError(HttpStatus.CONFLICT.value(), ex.getMessage());
         return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ApiError> handleResourceNotFoundException(ResourceNotFoundException ex) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
     }
 }

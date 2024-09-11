@@ -1,8 +1,7 @@
 package com.davidefella.infoquiz.controller.api;
 
+import com.davidefella.infoquiz.model.web.evaluation.*;
 import com.davidefella.infoquiz.model.web.evaluation.mapper.EvaluationMapper;
-import com.davidefella.infoquiz.model.web.evaluation.EvaluationDTOResponse;
-import com.davidefella.infoquiz.model.web.evaluation.EvaluationDTOResponseWrapper;
 import com.davidefella.infoquiz.controller.api.util.endpoints.ApiEndpoints;
 import com.davidefella.infoquiz.model.persistence.Evaluation;
 import com.davidefella.infoquiz.service.EvaluationService;
@@ -21,7 +20,7 @@ import java.util.List;
 @RestController
 public class EvaluationController {
 
-    private EvaluationService evaluationService;
+    private final EvaluationService evaluationService;
 
     @Autowired
     public EvaluationController(EvaluationService evaluationService, UserInfoQuizService userInfoQuizService) {
