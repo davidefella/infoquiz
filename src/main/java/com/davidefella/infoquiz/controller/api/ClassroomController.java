@@ -49,8 +49,7 @@ public class ClassroomController {
     @PreAuthorize("hasRole('TEACHER')")
     @GetMapping(ApiEndpoints.TEACHER_CLASSROOMS_V1 + "/{uuid}")
     public Classroom2StudentsDTOResponseWrapper getClassroomForTeacher(@PathVariable UUID uuid) {
-        Classroom classroom = classroomService.findByUUID(uuid)
-                .orElseThrow(() -> new EntityNotFoundException("Classroom not found with UUID: " + uuid));
+        Classroom classroom = classroomService.findByUUID(uuid);
 
         Classroom2StudentsDTOResponse dtoResponse = ClassroomMapper.toClassroomStudentsDto(classroom);
 

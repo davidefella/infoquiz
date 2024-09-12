@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,10 +21,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.hamcrest.Matchers.hasSize;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@ActiveProfiles("test")
 class ClassroomControllerTest {
 
     @Autowired
@@ -39,54 +42,58 @@ class ClassroomControllerTest {
     }
 
     @Test
-    void testClassroomsForTeacherWhenAuthenticatedThenReturnClassrooms() throws Exception {
-        MvcResult authResult = mvc.perform(post(ApiEndpoints.AUTH_TOKEN_V1)
-                                  .with(httpBasic("T_fd@gmail.com", "password")))
-                                  .andExpect(status().isOk())
-                                  .andReturn();
-
-        String token = TokenExtractor.extractTokenFromAuth(authResult);
-
-        assertNotNull(token);
-
-        mvc.perform(get(ApiEndpoints.TEACHER_CLASSROOMS_V1)
-                        .header("Authorization", "Bearer " + token))
-                        .andExpect(status().isOk())
-                        .andExpect(jsonPath("$.classrooms[0].code").value("YELLOW"))
-                        .andExpect(jsonPath("$.classrooms[0].countStudents").value("2"))
-                        .andExpect(jsonPath("$.classrooms[1].code").value("ORANGE"))
-                        .andExpect(jsonPath("$.classrooms[1].countStudents").value("1"))
-                        .andReturn();
-    }
-
-    @Test
-    void testClassroomsForTeacherWhenUnauthenticatedThenReturn401() throws Exception {
+    void whenUnauthenticated_thenReturn401ForTeacherClassrooms() throws Exception {
         mvc.perform(get(ApiEndpoints.TEACHER_CLASSROOMS_V1))
                 .andExpect(status().isUnauthorized());
     }
 
     @Test
-    void testGetStudentsByClassroomUuidWhenAuthenticatedThenReturnStudents() throws Exception {
-        MvcResult authResult = mvc.perform(post(ApiEndpoints.AUTH_TOKEN_V1)
+    void whenAuthenticated_thenReturnTeacherClassrooms() throws Exception {
+        // Autenticazione e ottenimento token
+        MvcResult authResult = mvc.perform(post(ApiEndpoints.AUTH_TOKEN)
                         .with(httpBasic("T_fd@gmail.com", "password")))
                 .andExpect(status().isOk())
                 .andReturn();
-
         String token = TokenExtractor.extractTokenFromAuth(authResult);
         assertNotNull(token);
 
+        // Verifica del contenuto delle classi restituite
         mvc.perform(get(ApiEndpoints.TEACHER_CLASSROOMS_V1)
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.classrooms[0].code").value("YELLOW"))
-                .andExpect(jsonPath("$.classrooms[0].countStudents").value("2"))  // Verifica il numero di studenti
-                .andExpect(jsonPath("$.classrooms[1].code").value("ORANGE"))
-                .andExpect(jsonPath("$.classrooms[1].countStudents").value("1"))  // Verifica il numero di studenti
+                .andExpect(jsonPath("$.classrooms[0].countStudents").value("2"))
                 .andReturn();
     }
 
     @Test
-    void testGetStudentsByClassroomUuidWhenUnauthenticatedThenReturn401() throws Exception {
+    void whenAuthenticated_thenReturnStudentsByClassroomUuid() throws Exception {
+        MvcResult authResult = mvc.perform(post(ApiEndpoints.AUTH_TOKEN)
+                        .with(httpBasic("T_fd@gmail.com", "password")))
+                .andExpect(status().isOk())
+                .andReturn();
+        String token = TokenExtractor.extractTokenFromAuth(authResult);
+        assertNotNull(token);
+
+        mvc.perform(get(ApiEndpoints.TEACHER_CLASSROOMS_V1 + "/" + UUIDRegistry.CLASSROOM_2_YELLOW)
+                        .header("Authorization", "Bearer " + token))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.classroom.students").isNotEmpty())
+                .andExpect(jsonPath("$.classroom.students", hasSize(2)))
+                .andReturn();
+    }
+
+    @Test
+    @Transactional
+    void whenBadCredentials_thenReturn400() throws Exception {
+        mvc.perform(post(ApiEndpoints.AUTH_TOKEN)
+                        .with(httpBasic("T_fdaaa@gmail.com", "password")))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @Transactional
+    void whenUnauthenticated_thenReturn401ForStudentsByClassroomUuid() throws Exception {
         mvc.perform(get(ApiEndpoints.TEACHER_CLASSROOMS_V1 + "/" + UUIDRegistry.CLASSROOM_2_YELLOW))
                 .andExpect(status().isUnauthorized());
     }

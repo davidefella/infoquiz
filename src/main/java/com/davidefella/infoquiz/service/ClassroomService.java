@@ -7,6 +7,7 @@ import com.davidefella.infoquiz.repository.ClassroomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -23,8 +24,9 @@ public class ClassroomService {
         this.userInfoQuizService = userInfoQuizService;
     }
 
-    public Optional<Classroom> findByUUID(UUID uuid){
-        return classroomRepository.findByUuid(uuid);
+    public Classroom findByUUID(UUID uuid){
+        return classroomRepository.findByUuid(uuid)
+                .orElseThrow(() -> new ResourceNotFoundException("Classroom not found with UUID: " + uuid));
     }
 
     public List<Classroom> saveAll(List<Classroom> classrooms) {
@@ -32,9 +34,11 @@ public class ClassroomService {
     }
 
     public List<Classroom> findClassroomsByTeacherEmail(String email) {
-        Teacher teacher = userInfoQuizService.findTeacherByEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("Teacher not found with email: " + email));
+        Optional<Teacher> teacherOpt = userInfoQuizService.findTeacherByEmail(email);
 
-        return classroomRepository.findByTeachers(teacher);
+        if (teacherOpt.isEmpty())
+            return new ArrayList<>();
+
+        return classroomRepository.findByTeachers(teacherOpt.get());
     }
 }

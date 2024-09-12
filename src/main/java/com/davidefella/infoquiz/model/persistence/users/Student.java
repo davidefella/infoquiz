@@ -15,7 +15,7 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = true)
 public class Student extends UserInfoQuiz {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Classroom classroom;
 
     public Student(String lastName, String firstName, String email, String password, Classroom classroom) {
@@ -27,6 +27,4 @@ public class Student extends UserInfoQuiz {
         super(uuid, lastName, firstName, email, password, InfoQuizRole.STUDENT);
         this.classroom = classroom;
     }
-
-
 }

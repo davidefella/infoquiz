@@ -1,5 +1,6 @@
 package com.davidefella.infoquiz.service;
 
+import com.davidefella.infoquiz.exception.ResourceNotFoundException;
 import com.davidefella.infoquiz.model.persistence.Evaluation;
 import com.davidefella.infoquiz.model.persistence.users.Teacher;
 import com.davidefella.infoquiz.repository.EvaluationRepository;
@@ -24,16 +25,8 @@ public class EvaluationService {
         return evaluationRepository.saveAll(evaluations);
     }
 
-    public List<Evaluation> findAll() {
-        return evaluationRepository.findAll();
-    }
-
-    public Optional<Evaluation> findByUUID(UUID uuid) {
-        return evaluationRepository.findByUuid(uuid);
-    }
-
-    public List<Evaluation> findByAssignedTeacher(Teacher teacher) {
-        return evaluationRepository.findByAssignedTeacher(teacher);
+    public Evaluation findByUUID(UUID uuid) {
+        return evaluationRepository.findByUuid(uuid)  .orElseThrow(() -> new ResourceNotFoundException("Classroom not found with UUID: " + uuid));
     }
 
     public List<Evaluation> findByEmailAssignedTeacher(String email) {

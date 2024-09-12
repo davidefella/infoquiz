@@ -37,16 +37,41 @@ public class UserInfoQuizService {
     public Optional<Teacher> findTeacherByEmail(String email) {
         Optional<UserInfoQuiz> userInfoQuizOpt = userInfoQuizRepository.findByEmail(email);
 
-        if (userInfoQuizOpt.isPresent() && userInfoQuizOpt.get() instanceof Teacher) {
-            return Optional.of((Teacher) userInfoQuizOpt.get());
-        }
+        return convertToTeacher(userInfoQuizOpt);
+    }
 
-        return Optional.empty();
+    public Optional<Student> findStudentByUUID(UUID uuid) {
+        Optional<UserInfoQuiz> userInfoQuizOpt = userInfoQuizRepository.findByUuid(uuid);
+
+        return convertToStudent(userInfoQuizOpt);
+    }
+
+
+    public Optional<Teacher> findTeacherByUUID(UUID uuid) {
+        Optional<UserInfoQuiz> userInfoQuizOpt = userInfoQuizRepository.findByUuid(uuid);
+
+        return convertToTeacher(userInfoQuizOpt);
     }
 
     public Optional<UserInfoQuiz> findByEmail(String email) {
         return userInfoQuizRepository.findByEmail(email);
     }
 
+    private Optional<Teacher> convertToTeacher(Optional<UserInfoQuiz> userInfoQuizOpt){
+        if (userInfoQuizOpt.isPresent() && userInfoQuizOpt.get() instanceof Teacher) {
+            return Optional.of((Teacher) userInfoQuizOpt.get());
+        }
 
+        return Optional.empty();
+
+    }
+
+    private Optional<Student> convertToStudent(Optional<UserInfoQuiz> userInfoQuizOpt){
+        if (userInfoQuizOpt.isPresent() && userInfoQuizOpt.get() instanceof Student) {
+            return Optional.of((Student) userInfoQuizOpt.get());
+        }
+
+        return Optional.empty();
+
+    }
 }

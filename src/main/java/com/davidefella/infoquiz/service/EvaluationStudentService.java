@@ -5,6 +5,8 @@ import com.davidefella.infoquiz.repository.EvaluationStudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EvaluationStudentService {
 
@@ -17,6 +19,10 @@ public class EvaluationStudentService {
 
     public EvaluationStudent save(EvaluationStudent evaluationStudent) {
         return evaluationStudentRepository.save(evaluationStudent);
+    }
+
+    public List<EvaluationStudent> saveAll(List<EvaluationStudent> evaluationsStudents) {
+        return evaluationStudentRepository.saveAll(evaluationsStudents);
     }
 
 }

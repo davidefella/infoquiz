@@ -3,10 +3,7 @@ package com.davidefella.infoquiz.model.persistence.users;
 import com.davidefella.infoquiz.model.persistence.Classroom;
 import com.davidefella.infoquiz.model.persistence.Evaluation;
 import com.davidefella.infoquiz.model.persistence.users.role.InfoQuizRole;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,22 +15,17 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Teacher extends UserInfoQuiz{
 
-    @ElementCollection
-    private List<String> subjects;
-
     @OneToMany(mappedBy = "assignedTeacher")
     private List<Evaluation> evaluationsAssigned;
 
-    @ManyToMany(mappedBy = "teachers")
+    @ManyToMany(mappedBy = "teachers", fetch = FetchType.EAGER)
     private List<Classroom> classrooms;
 
-    public Teacher(String lastName, String firstName, String email, String password, List<String> subjects) {
+    public Teacher(String lastName, String firstName, String email, String password) {
         super(lastName, firstName, email, password, InfoQuizRole.ROLE_TEACHER);
-        this.subjects = subjects;
     }
 
-    public Teacher(UUID uuid, String lastName, String firstName, String email, String password, List<String> subjects) {
+    public Teacher(UUID uuid, String lastName, String firstName, String email, String password) {
         super(uuid, lastName, firstName, email, password, InfoQuizRole.ROLE_TEACHER);
-        this.subjects = subjects;
     }
 }

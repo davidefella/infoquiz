@@ -30,12 +30,15 @@ public class EvaluationStudent {
 
     private double score;
 
-    public EvaluationStudent(){
-        this.uuid = UUID.randomUUID();
-    }
-
     public EvaluationStudent(Evaluation evaluation, Student student, double score) {
         this.uuid = UUID.randomUUID();
+        this.evaluation = evaluation;
+        this.student = student;
+        this.score = score;
+    }
+
+    public EvaluationStudent(UUID uuid, Evaluation evaluation, Student student, double score) {
+        this.uuid = uuid;
         this.evaluation = evaluation;
         this.student = student;
         this.score = score;

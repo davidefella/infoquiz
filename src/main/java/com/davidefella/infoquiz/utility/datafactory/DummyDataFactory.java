@@ -33,6 +33,12 @@ public class DummyDataFactory {
     private final QuestionService questionItemService;
     private final ClassroomService classroomService;
 
+    /*Data*/
+    List<Classroom> classrooms;
+    List<UserInfoQuiz> userInfoQuizs;
+    List<Evaluation> evaluations;
+    List<Question> questions;
+
     @Autowired
     public DummyDataFactory(AnswerService answerService, EvaluationService evaluationService,
                             EvaluationStudentService evaluationStudentService, UserInfoQuizService userInfoQuizService,
@@ -53,112 +59,95 @@ public class DummyDataFactory {
         loadAnswerData();
 
     }
-
-    private void loadUserAndClassroomsData() {
+    public void loadUserAndClassroomsData() {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String rawPassword = "password";
+        String encodedPassword = encoder.encode("password");
 
-        List<Classroom> classrooms = Arrays.asList(
-                new Classroom("BLUE", "BLue room", null, null),
-                new Classroom("YELLOW", "Yellow room", null, null),
-                new Classroom("ORANGE", "Orange room", null, null)
-        );
-
+        classrooms = Arrays.asList(
+                new Classroom("BLUE", "Empty Classroom", null, null),
+                new Classroom("YELLOW", "2 students", null, null),
+                new Classroom("ORANGE", "1 students", null, null));
         classroomService.saveAll(classrooms);
 
-        List<UserInfoQuiz> userInfoQuizs = new ArrayList<>(List.of(
-                new Student("Cognome 1", "Nome 1", null, null, classrooms.get(1)),
-                new Student("Cognome 2", "Nome 2", null, null, classrooms.get(1)),
-                new Student("Cognome 3", "Nome 3", null, null, classrooms.get(2)),
-                new Teacher("F", "D", "fd@gmail.com", encoder.encode(rawPassword), new ArrayList<>(Arrays.asList("Java", "Database"))),
-                new Teacher("E", "S", "es@gmail.com", encoder.encode(rawPassword), List.of("JavaScript")),
-                new Teacher("T", "T", "test@gmail.com", encoder.encode(rawPassword),  new ArrayList<>(Arrays.asList("JavaScript")))));
+        userInfoQuizs = new ArrayList<>(List.of(
+                new Student("T_Cognome Studente 1", "T_Nome Studente 1", null, null, classrooms.get(1)),
+                new Student("T_Cognome Studente 2", "T_Nome Studente 2", null, null, classrooms.get(1)),
+                new Student("T_Cognome Studente 3", "T_Nome Studente 3", null, null, classrooms.get(2)),
+                new Teacher("F", "D", "T_fd@gmail.com", encodedPassword),
+                new Teacher("E", "S", "T_es@gmail.com", encodedPassword),
+                new Teacher("T", "T", "T_te@gmail.com", encodedPassword)));
+        userInfoQuizs = userInfoQuizService.saveAll(userInfoQuizs);
 
+        Classroom yellowClassroom = classrooms.get(1);
+        Classroom orangeClassroom = classrooms.get(2);
 
-        userInfoQuizService.saveAll(userInfoQuizs);
+        Teacher teacher1 = (Teacher) userInfoQuizs.get(3);
+        Teacher teacher2 = (Teacher) userInfoQuizs.get(4);
+        Teacher teacher3 = (Teacher) userInfoQuizs.get(5);
 
-        classrooms.get(1).getTeachers().add((Teacher) userInfoQuizs.get(3));
-        classrooms.get(2).getTeachers().add((Teacher) userInfoQuizs.get(3));
-        classrooms.get(2).getTeachers().add((Teacher) userInfoQuizs.get(4));
+        yellowClassroom.getTeachers().add(teacher1);
+        orangeClassroom.getTeachers().add(teacher2);
+        orangeClassroom.getTeachers().add(teacher3);
 
-        // Salva gli insegnanti
-        userInfoQuizService.saveAll(Arrays.asList(userInfoQuizs.get(3), userInfoQuizs.get(4)));
-
-        // Salva nuovamente le classi per sincronizzare il lato classroom-teachers
+        classroomService.saveAll(Arrays.asList(yellowClassroom, orangeClassroom));
         classroomService.saveAll(classrooms);
     }
 
-
     private void loadEvaluationData() {
-        Teacher t1 = (Teacher) userInfoQuizService.findByEmail("fd@gmail.com").get();
+        evaluations = List.of(
+                new Evaluation("T Evaluation 1", LocalDate.now(), "T1 Evaluation Test", (Teacher) userInfoQuizs.get(3), true),
+                new Evaluation("T Evaluation 2", LocalDate.now(), "T2 Evaluation Test", (Teacher) userInfoQuizs.get(3), true),
+                new Evaluation("T Evaluation 3", LocalDate.now(), "T3 Evaluation Test", (Teacher) userInfoQuizs.get(4), true)
 
-        List<Evaluation> evaluations = Arrays.asList(
-                new Evaluation("Evaluation 1", LocalDate.now(), "Descrizione Evaluation 1", t1, true),
-                new Evaluation("Evaluation 2", LocalDate.now().minusMonths(1), "Descrizione Evaluation 2", t1, true),
-                new Evaluation("Evaluation 3", LocalDate.now().minusMonths(2), "Descrizione Evaluation 3", t1, true)
         );
-
-        evaluationService.saveAll(evaluations);
-
-        logger.info("Loaded evaluations");
+        evaluations = evaluationService.saveAll(evaluations);
     }
 
     private void loadQuestionData() {
-        for (Evaluation evaluation : evaluationService.findAll()) {
-            List<Question> questions = Arrays.asList(
-                    new Question(evaluation, "Question 1 ?"),
-                    new Question(evaluation, "Question 2 ?"),
-                    new Question(evaluation, "Question 3 ?"),
-                    new Question(evaluation, "Question 4 ?"),
-                    new Question(evaluation, "Question 5 ?")
-            );
+        questions = Arrays.asList(
+                new Question(evaluations.get(0), "Question 1 ?"),
+                new Question(evaluations.get(0), "Question 2 ?"),
+                new Question(evaluations.get(0), "Question 3 ?"),
+                new Question(evaluations.get(2), "Question 1 ?"),
+                new Question(evaluations.get(2), "Question 2 ?"),
+                new Question(evaluations.get(2), "Question 3 ?")
+        );
 
-            for (Question question : questions) {
-                questionItemService.save(question);
-            }
-        }
-
-        logger.info("Loaded questions");
-
+        questions = questionItemService.saveAll(questions);
     }
 
     private void loadAnswerData() {
-        List<Question> questions = questionItemService.findAll();
 
-        for (Question question : questions) {
-            List<Answer> answers = Arrays.asList(
-                    new Answer(question, "Correct answer for " + question.getQuestionText(), true),
-                    new Answer(question, "answer 2 <code> Some Code </code>?\n ", false),
-                    new Answer(question, "answer 3 ", false),
-                    new Answer(question, "answer 4 ", false)
-            );
+        List<Answer> answersQ1 = Arrays.asList(
+                new Answer(questions.get(0), "Correct answer", true),
+                new Answer(questions.get(0), "Wrong answer", false),
+                new Answer(questions.get(0), "Wrong answer", false)
+        );
+        answerService.saveAll(answersQ1);
 
-            answerService.saveAll(answers);
+        List<Answer> answersQ2 = Arrays.asList(
+                new Answer(questions.get(1), "Wrong answer", false),
+                new Answer(questions.get(1), "Correct answer", true),
+                new Answer(questions.get(1), "Wrong answer", false)
+        );
+        answerService.saveAll(answersQ2);
 
-        }
+        List<Answer> answersQ3 = Arrays.asList(
+                new Answer(questions.get(2), "Wrong answer", false),
+                new Answer(questions.get(2), "Wrong answer", false),
+                new Answer(questions.get(2), "Correct answer", true)
+        );
+        answerService.saveAll(answersQ3);
 
         logger.info("Loaded answers");
-
     }
 
     private void loadEvaluationStudentData() {
-        List<Student> students = userInfoQuizService.findAllStudents();
+        List<EvaluationStudent> evaluationStudents = Arrays.asList(
+                new EvaluationStudent(evaluations.get(0), (Student) userInfoQuizs.get(2), 5.9),
+                new EvaluationStudent(evaluations.get(0), (Student) userInfoQuizs.get(1), 10.0),
+                new EvaluationStudent(evaluations.get(1), (Student) userInfoQuizs.get(1), 11));
 
-        List<Evaluation> evaluations = evaluationService.findAll();
-
-        for (Student student : students) {
-            for (Evaluation evaluation : evaluations) {
-                EvaluationStudent evaluationStudent = new EvaluationStudent();
-                evaluationStudent.setStudent(student);
-                evaluationStudent.setEvaluation(evaluation);
-
-                // Random score between 0 and 100
-                evaluationStudent.setScore(DecimalRounder.roundToTwoDecimals(Math.random() * 10));
-                evaluationStudentService.save(evaluationStudent);
-            }
-        }
-
-        logger.info("Loaded students sessions");
-
+        evaluationStudentService.saveAll(evaluationStudents);
     }
 }

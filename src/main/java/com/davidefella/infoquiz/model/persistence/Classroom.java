@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +32,11 @@ public class Classroom {
     private String name;
 
     @OneToMany(mappedBy = "classroom", fetch = FetchType.EAGER)
-    private List<Student> students;
+    @ToString.Exclude
+    private List<Student> students = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
+    @ToString.Exclude
     private List<Teacher> teachers = new ArrayList<>();
 
     public Classroom(UUID uuid, String code, String name, List<Student> students, List<Teacher> teachers) {
