@@ -1,6 +1,8 @@
 package com.davidefella.infoquiz.model.persistence;
 
 import jakarta.persistence.*;
+
+import java.util.List;
 import java.util.UUID;
 import jakarta.validation.constraints.NotNull;
 
@@ -27,6 +29,9 @@ public class Question {
 
     @JoinColumn(nullable = false)
     private String questionText;
+
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answers;
 
     public Question(Evaluation evaluation, String questionText ) {
         this.uuid = UUID.randomUUID();

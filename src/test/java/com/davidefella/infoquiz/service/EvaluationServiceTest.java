@@ -77,4 +77,7 @@ public class EvaluationServiceTest {
         assertNotNull(assignedTeacher);
         assertEquals(UUIDRegistry.TEACHER_3, assignedTeacher.getUuid());
     }
+
+
+
 }

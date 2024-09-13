@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -38,6 +39,9 @@ public class Evaluation {
     private String description;
 
     private boolean isActive;
+
+    @OneToMany(mappedBy = "evaluation")
+    private List<Question> questions;
 
     public Evaluation(String title, LocalDate evaluationDate, String description, Teacher assignedTeacher, boolean isActive) {
         this.uuid = UUID.randomUUID();

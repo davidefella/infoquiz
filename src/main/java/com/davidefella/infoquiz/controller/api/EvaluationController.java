@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -41,5 +42,11 @@ public class EvaluationController {
         }
 
         return new EvaluationDTOResponseWrapper(dtoResponses);
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")
+    @GetMapping(ApiEndpoints.TEACHER_EVALUATIONS_V1 + "/{uuid}")
+    public EvaluationDetailsDTO getEvaluationDetails(@PathVariable UUID uuid) {
+        return evaluationService.getEvaluationWithQuestions(uuid);
     }
 }
