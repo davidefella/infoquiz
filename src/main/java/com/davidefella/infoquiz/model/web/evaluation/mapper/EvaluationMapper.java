@@ -9,6 +9,7 @@ public class EvaluationMapper {
 
     public static EvaluationDTOResponse toEvaluationDto(Evaluation evaluation) {
         return new EvaluationDTOResponse(
+                evaluation.getUuid(),
                 evaluation.getAssignedTeacher().getUuid(),
                 evaluation.getEvaluationDate(),
                 evaluation.getTitle(),

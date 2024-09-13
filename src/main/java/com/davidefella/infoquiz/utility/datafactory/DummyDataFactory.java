@@ -5,7 +5,6 @@ import com.davidefella.infoquiz.model.persistence.users.Student;
 import com.davidefella.infoquiz.model.persistence.users.Teacher;
 import com.davidefella.infoquiz.model.persistence.users.UserInfoQuiz;
 import com.davidefella.infoquiz.service.*;
-import com.davidefella.infoquiz.utility.DecimalRounder;
 import com.davidefella.infoquiz.utility.StartupDataLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,29 +32,32 @@ public class DummyDataFactory {
     private final UserInfoQuizService userInfoQuizService;
     private final QuestionService questionItemService;
     private final ClassroomService classroomService;
+    private final EvaluationSessionService evaluationSessionService;
 
     /*Data*/
     List<Classroom> classrooms;
     List<UserInfoQuiz> userInfoQuizs;
     List<Evaluation> evaluations;
     List<Question> questions;
+    List<EvaluationSession> sessions;
 
     @Autowired
     public DummyDataFactory(AnswerService answerService, EvaluationService evaluationService,
                             EvaluationStudentService evaluationStudentService, UserInfoQuizService userInfoQuizService,
-                            QuestionService questionItemService, ClassroomService classroomService) {
+                            QuestionService questionItemService, ClassroomService classroomService, EvaluationSessionService evaluationSessionService) {
         this.answerService = answerService;
         this.evaluationService = evaluationService;
         this.evaluationStudentService = evaluationStudentService;
         this.userInfoQuizService = userInfoQuizService;
         this.questionItemService = questionItemService;
         this.classroomService = classroomService;
+        this.evaluationSessionService = evaluationSessionService;
     }
 
     public void loadAllDummyData() {
         loadUserAndClassroomsData();
         loadEvaluationData();
-        loadEvaluationStudentData();
+        loadEvaluationAndSessionsStudentData();
         loadQuestionData();
         loadAnswerData();
 
@@ -142,11 +145,20 @@ public class DummyDataFactory {
         logger.info("Loaded answers");
     }
 
-    private void loadEvaluationStudentData() {
+    private void loadEvaluationAndSessionsStudentData() {
+        sessions = Arrays.asList(
+                new EvaluationSession(LocalDate.of(2024,9,30), LocalTime.of(10,0), LocalTime.of(12,0), EvaluationSessionStatus.PLANNED, evaluations.get(0), classrooms.get(1) ),
+                new EvaluationSession(LocalDate.of(2024,9,30), LocalTime.of(14,0), LocalTime.of(16,0), EvaluationSessionStatus.PLANNED, evaluations.get(0), classrooms.get(1) ),
+                new EvaluationSession(LocalDate.of(2024,6,30), LocalTime.of(9,0), LocalTime.of(12,0), EvaluationSessionStatus.COMPLETED, evaluations.get(0), classrooms.get(1) ),
+                new EvaluationSession(LocalDate.of(2024,10,30), LocalTime.of(9,0), LocalTime.of(13,0), EvaluationSessionStatus.STANDBY, evaluations.get(2), null )
+                );
+
+        evaluationSessionService.saveAll(sessions);
+
         List<EvaluationStudent> evaluationStudents = Arrays.asList(
-                new EvaluationStudent(evaluations.get(0), (Student) userInfoQuizs.get(2), 5.9),
-                new EvaluationStudent(evaluations.get(0), (Student) userInfoQuizs.get(1), 10.0),
-                new EvaluationStudent(evaluations.get(1), (Student) userInfoQuizs.get(1), 11));
+                new EvaluationStudent(sessions.getFirst(), (Student) userInfoQuizs.get(2), 5.9),
+                new EvaluationStudent(sessions.getFirst(), (Student) userInfoQuizs.get(1), 10.0),
+                new EvaluationStudent(sessions.getFirst(), (Student) userInfoQuizs.get(1), 11));
 
         evaluationStudentService.saveAll(evaluationStudents);
     }

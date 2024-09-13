@@ -35,7 +35,6 @@ public class EvaluationController {
         List<Evaluation> evaluations = evaluationService.findByEmailAssignedTeacher(jwtAuthToken.getName());
 
         List<EvaluationDTOResponse> dtoResponses = new ArrayList<>();
-        EvaluationDTOResponse dto = null;
 
         for (Evaluation evaluation : evaluations) {
             dtoResponses.add(EvaluationMapper.toEvaluationDto(evaluation));

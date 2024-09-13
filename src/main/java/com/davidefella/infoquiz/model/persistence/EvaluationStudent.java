@@ -21,8 +21,7 @@ public class EvaluationStudent {
     private UUID uuid;
 
     @ManyToOne
-    @JoinColumn(name = "evaluation_id")
-    private Evaluation evaluation;
+    private EvaluationSession session;
 
     @ManyToOne
     @JoinColumn(name = "student_id")
@@ -30,16 +29,16 @@ public class EvaluationStudent {
 
     private double score;
 
-    public EvaluationStudent(Evaluation evaluation, Student student, double score) {
+    public EvaluationStudent(EvaluationSession session, Student student, double score) {
         this.uuid = UUID.randomUUID();
-        this.evaluation = evaluation;
+        this.session = session;
         this.student = student;
         this.score = score;
     }
 
-    public EvaluationStudent(UUID uuid, Evaluation evaluation, Student student, double score) {
+    public EvaluationStudent(UUID uuid, EvaluationSession session, Student student, double score) {
         this.uuid = uuid;
-        this.evaluation = evaluation;
+        this.session = session;
         this.student = student;
         this.score = score;
     }

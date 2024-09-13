@@ -12,10 +12,4 @@ import java.util.UUID;
 public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     Optional<Question> findByUuid(UUID uuid);
-
-    //TODO: Rimuovere e passare oggetto Evaluation
-    Optional<List<Question>> findByEvaluationUuid(UUID evaluationCode);
-
-    //TODO: Rimuovere
-    void deleteById(Long id);
 }

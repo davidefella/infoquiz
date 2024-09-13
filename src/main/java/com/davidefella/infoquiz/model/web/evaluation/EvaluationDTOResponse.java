@@ -10,6 +10,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class EvaluationDTOResponse {
 
+    private UUID uuidEvaluation;
     private UUID uuidAssignedTeacher;
     private LocalDate evaluationDate;
     private String title;

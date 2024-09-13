@@ -2,16 +2,6 @@ package com.davidefella.infoquiz.util;
 
 import java.util.UUID;
 
-/*
- * DATA TEST:
- *
- * a --> student and teacher
- * b --> classrooms
- * c --> evaluation
- * d --> questions
- * e --> answer
- * f --> classrooms
- * */
 public class UUIDRegistry {
 
     public static final UUID STUDENT_1 = UUID.fromString("a1000000-e89b-12d3-a456-426614174000");
@@ -52,4 +42,10 @@ public class UUIDRegistry {
     public static final UUID EVALUATION_STUDENT_1 = UUID.fromString("f1000000-e89b-12d3-a456-42661417400d");
     public static final UUID EVALUATION_STUDENT_2 = UUID.fromString("f2000000-e89b-12d3-a456-42661417400d");
     public static final UUID EVALUATION_STUDENT_3 = UUID.fromString("f3000000-e89b-12d3-a456-42661417400d");
+
+    public static final UUID EVALUATION_SESSION_1 = UUID.fromString("f4000000-e89b-12d3-a456-42661417400d");
+    public static final UUID EVALUATION_SESSION_2 = UUID.fromString("f5000000-e89b-12d3-a456-42661417400d");
+    public static final UUID EVALUATION_SESSION_3 = UUID.fromString("f6000000-e89b-12d3-a456-42661417400d");
+    public static final UUID EVALUATION_SESSION_4 = UUID.fromString("f7000000-e89b-12d3-a456-42661417400d");
+
 }

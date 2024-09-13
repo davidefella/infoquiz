@@ -46,7 +46,7 @@ public class ClassroomServiceTest {
     @Test
     public void testFindClassroomByUUID_ClassroomNotExists_ThrowsResourceNotFoundException() {
         assertThrows(ResourceNotFoundException.class, () -> {
-            classroomService.findByUUID(UUID.fromString("b2222222-e89b-12d3-a456-42661417400d"));
+            classroomService.findByUUID(UUID.fromString("22222222-2222-2222-2222-222222222222"));
         });
     }
 

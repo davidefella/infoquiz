@@ -14,9 +14,6 @@ public interface EvaluationRepository extends JpaRepository<Evaluation, Long> {
 
     Optional<Evaluation> findByUuid(UUID uuid);
 
-    /*TODO: Refactor*/
-    List<Evaluation> findByAssignedTeacher(Teacher assignedTeacher);
-
     List<Evaluation> findByAssignedTeacherEmail(String email);
 
 }

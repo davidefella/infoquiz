@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 @ActiveProfiles("test")
@@ -26,20 +27,21 @@ public class DummyTestDataFactory {
     private final EvaluationService evaluationService;
     private final EvaluationStudentService evaluationStudentService;
     private final UserInfoQuizService userInfoQuizService;
-
+    private final EvaluationSessionService evaluationSessionService;
     private final QuestionService questionItemService;
     private final ClassroomService classroomService;
 
     @Autowired
     public DummyTestDataFactory(AnswerService answerService, EvaluationService evaluationService,
                                 EvaluationStudentService evaluationStudentService, UserInfoQuizService userInfoQuizService,
-                                QuestionService questionItemService, ClassroomService classroomService) {
+                                QuestionService questionItemService, ClassroomService classroomService, EvaluationSessionService evaluationSessionService) {
         this.answerService = answerService;
         this.evaluationService = evaluationService;
         this.evaluationStudentService = evaluationStudentService;
         this.userInfoQuizService = userInfoQuizService;
         this.questionItemService = questionItemService;
         this.classroomService = classroomService;
+        this.evaluationSessionService = evaluationSessionService;
     }
 
     public void loadAllDummyData() {
@@ -47,7 +49,7 @@ public class DummyTestDataFactory {
         loadEvaluationData();
         loadQuestionData();
         loadAnswerData();
-        loadEvaluationStudentData();
+        loadEvaluationAndSessionsStudentData();
     }
 
     public void loadUserAndClassroomsData() {
@@ -148,16 +150,52 @@ public class DummyTestDataFactory {
         logger.info("Loaded answers");
     }
 
-    private void loadEvaluationStudentData() {
+    private void loadEvaluationAndSessionsStudentData() {
+        EvaluationSession es1 = new EvaluationSession(
+                UUIDRegistry.EVALUATION_SESSION_1, LocalDate.of(2024, 9, 30), LocalTime.of(10, 0), LocalTime.of(12, 0), EvaluationSessionStatus.PLANNED,
+                evaluationService.findByUUID(UUIDRegistry.EVALUATION_1), classroomService.findByUUID(UUIDRegistry.CLASSROOM_2_YELLOW));
+
+        EvaluationSession es2 = new EvaluationSession(
+                UUIDRegistry.EVALUATION_SESSION_2, LocalDate.of(2024, 9, 30), LocalTime.of(14, 0), LocalTime.of(16, 0), EvaluationSessionStatus.PLANNED,
+                evaluationService.findByUUID(UUIDRegistry.EVALUATION_1), classroomService.findByUUID(UUIDRegistry.CLASSROOM_2_YELLOW));
+
+        EvaluationSession es3 = new EvaluationSession(
+                UUIDRegistry.EVALUATION_SESSION_3, LocalDate.of(2024, 6, 30), LocalTime.of(9, 0), LocalTime.of(12, 0), EvaluationSessionStatus.COMPLETED,
+                evaluationService.findByUUID(UUIDRegistry.EVALUATION_1), classroomService.findByUUID(UUIDRegistry.CLASSROOM_2_YELLOW));
+
+        EvaluationSession es4 = new EvaluationSession(
+                UUIDRegistry.EVALUATION_SESSION_4, LocalDate.of(2024, 10, 30), LocalTime.of(9, 0), LocalTime.of(13, 0), EvaluationSessionStatus.STANDBY,
+                evaluationService.findByUUID(UUIDRegistry.EVALUATION_3), null);
+
+        List<EvaluationSession> evaluationSessions = Arrays.asList(es1, es2, es3, es4);
+        evaluationSessionService.saveAll(evaluationSessions);
+
         Student s2 = userInfoQuizService.findStudentByUUID(UUIDRegistry.STUDENT_2).get();
         Student s3 = userInfoQuizService.findStudentByUUID(UUIDRegistry.STUDENT_3).get();
-        Evaluation e1 = evaluationService.findByUUID(UUIDRegistry.EVALUATION_1);
 
         List<EvaluationStudent> evaluationStudents = Arrays.asList(
-                new EvaluationStudent(UUIDRegistry.EVALUATION_STUDENT_1, e1, s3, 5.9),
-                new EvaluationStudent(UUIDRegistry.EVALUATION_STUDENT_2, e1, s2, 10.0),
-                new EvaluationStudent(UUIDRegistry.EVALUATION_STUDENT_3, e1, s2, 11));
+                new EvaluationStudent(UUIDRegistry.EVALUATION_STUDENT_1, es1, s3, 5.9),
+                new EvaluationStudent(UUIDRegistry.EVALUATION_STUDENT_2, es1, s2, 10.0),
+                new EvaluationStudent(UUIDRegistry.EVALUATION_STUDENT_3, es1, s2, 11));
 
         evaluationStudentService.saveAll(evaluationStudents);
     }
+
+    /*
+    *     private void loadEvaluationAndSessionsStudentData() {
+
+                new EvaluationSession(, evaluations.get(0), classrooms.get(1) ),
+                new EvaluationSession(, evaluations.get(2), null )
+                );
+
+        evaluationSessionService.saveAll(sessions);
+
+        List<EvaluationStudent> evaluationStudents = Arrays.asList(
+                new EvaluationStudent(sessions.getFirst(), (Student) userInfoQuizs.get(2), 5.9),
+                new EvaluationStudent(sessions.getFirst(), (Student) userInfoQuizs.get(1), 10.0),
+                new EvaluationStudent(sessions.getFirst(), (Student) userInfoQuizs.get(1), 11));
+
+        evaluationStudentService.saveAll(evaluationStudents);
+    }
+    * */
 }
