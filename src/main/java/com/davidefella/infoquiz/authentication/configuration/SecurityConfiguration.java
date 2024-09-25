@@ -65,6 +65,7 @@ public class SecurityConfiguration {
                     ex.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint());
                     ex.accessDeniedHandler(new BearerTokenAccessDeniedHandler());
                 })
+                .cors().disable()  // Disabilita CORS qui
                 .build();
     }
 
