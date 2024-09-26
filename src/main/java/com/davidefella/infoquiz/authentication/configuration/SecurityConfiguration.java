@@ -56,7 +56,7 @@ public class SecurityConfiguration {
                 .headers(headers -> headers
                         .frameOptions().disable()) // TODO: For testing purpose
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/h2-console/**").permitAll() // TODO: For testing purpose
+                        .requestMatchers("/h2-console/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll() // Allow Swagger access
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(oauth2 -> oauth2
@@ -68,6 +68,7 @@ public class SecurityConfiguration {
                 .cors().disable()  // Disabilita CORS qui
                 .build();
     }
+
 
     @Order(Ordered.HIGHEST_PRECEDENCE)
     @Bean

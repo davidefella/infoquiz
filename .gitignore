@@ -71,3 +71,4 @@ spring.log
 *.orig
 
 /dist/
+/logs/
