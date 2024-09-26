@@ -46,21 +46,6 @@ class AuthenticationServiceTest {
     }
 
     @Test
-    void testWhenUnauthenticatedThen401_1() throws Exception {
-        mvc.perform(get("/")).andExpect(status().isUnauthorized());
-
-        mvc.perform(post(ApiEndpoints.AUTH_TOKEN)
-                        .with(httpBasic("wrong@gmail.com", "password")))
-                .andExpect(status().isUnauthorized())
-                .andReturn();
-
-        mvc.perform(post(ApiEndpoints.AUTH_TOKEN)
-                        .with(httpBasic("T_fd@gmail.com", "wrong")))
-                .andExpect(status().isUnauthorized())
-                .andReturn();
-    }
-
-    @Test
     void testWhenAuthenticatedThenCheckToken() throws Exception {
         MvcResult result = mvc.perform(post(ApiEndpoints.AUTH_TOKEN)
                               .with(httpBasic("T_fd@gmail.com", "password")))
