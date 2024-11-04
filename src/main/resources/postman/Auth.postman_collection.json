@@ -1,0 +1,53 @@
+{
+	"info": {
+		"_postman_id": "279b50f8-d53a-4a66-98b5-9392950080b3",
+		"name": "Auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14801810",
+		"_collection_link": "https://lunar-rocket-95745.postman.co/workspace/infoquiz-be~74066c55-1323-47aa-af7e-c19c5df74cae/collection/14801810-279b50f8-d53a-4a66-98b5-9392950080b3?action=share&source=collection_link&creator=14801810"
+	},
+	"item": [
+		{
+			"name": "token",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "T_fd@gmail.com",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic ZmRAZ21haWwuY29tOnBhc3N3b3Jk ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/auth/token",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

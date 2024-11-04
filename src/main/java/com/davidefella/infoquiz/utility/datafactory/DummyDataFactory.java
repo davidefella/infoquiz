@@ -73,8 +73,8 @@ public class DummyDataFactory {
         classroomService.saveAll(classrooms);
 
         userInfoQuizs = new ArrayList<>(List.of(
-                new Student("T_Cognome Studente 1", "T_Nome Studente 1", null, null, classrooms.get(1)),
-                new Student("T_Cognome Studente 2", "T_Nome Studente 2", null, null, classrooms.get(1)),
+                        new Student("T_Cognome Studente 1", "T_Nome Studente 1", null, null, classrooms.get(1)),
+                        new Student("T_Cognome Studente 2", "T_Nome Studente 2", null, null, classrooms.get(1)),
                 new Student("T_Cognome Studente 3", "T_Nome Studente 3", null, null, classrooms.get(2)),
                 new Teacher("F", "D", "T_fd@gmail.com", encodedPassword),
                 new Teacher("E", "S", "T_es@gmail.com", encodedPassword),

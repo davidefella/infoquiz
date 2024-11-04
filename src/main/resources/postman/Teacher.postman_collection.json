@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "c079735c-1e53-4092-b41c-35fce0999dc5",
+		"name": "Teacher",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14801810",
+		"_collection_link": "https://lunar-rocket-95745.postman.co/workspace/infoquiz-be~74066c55-1323-47aa-af7e-c19c5df74cae/collection/14801810-c079735c-1e53-4092-b41c-35fce0999dc5?action=share&source=collection_link&creator=14801810"
+	},
+	"item": [
+		{
+			"name": "Get Students by ClassRooms UUID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiVF9mZEBnbWFpbC5jb20iLCJleHAiOjE3MjYwOTEzNzcsImlhdCI6MTcyNjA4Nzc3Nywic2NvcGUiOiJST0xFX1RFQUNIRVIifQ.ph8e3fVVD9KUagvDNHqxao_bOZ4Z3VYSFte2TSlr8sli0OdTjQerwjD_sPYx67UefIZqOInEF46lJYlWull9UnmfbxeZirX_zYhtDQ2LR149dDinVkvblbsIgcHzKc0uO38dM4PeyIWjrht8KdlhHCwTWJoZ1obrNzyziXhx0E7YGxz9VpvYdTJu1oiRlGRy7bzJYIGn59HSJSoMQuCt-BTkg3xQrCVWJ1T9EL90_qopfIJNrLUdFtAUqN8-zGsU8Y6E7NhisKl8sYh6Dn0zO4dHe6vavkHdLsJomcsN-W7IHegIWY8hlf20GkQvpBGOmSOfR-8YqPcRiMjHPM-_Gw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/teacher/classrooms/96c19f48-9185-40dd-af62-a5a0c3e5da05",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"teacher",
+						"classrooms",
+						"96c19f48-9185-40dd-af62-a5a0c3e5da05"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Evaluations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiVF9mZEBnbWFpbC5jb20iLCJleHAiOjE3MjYyNjQ0NzAsImlhdCI6MTcyNjI2MDg3MCwic2NvcGUiOiJST0xFX1RFQUNIRVIifQ.BoDu3B8Z5SQ_Ny1A72QI_Ks8emoghgxNKBK99KLioWzN7expMb2ktj96y9Cgw90wV7yKVYj-9cNEZHULHTiX8xvzqa70CSXFqkPBCJ6K0epZ_7IqayW02GuZnQ8n46a_73PXQcv84xjrrdw-LpF7QJXP3yrhkVvAuCdZlFLuk0T242N32HRyKlU8EWnHvQYGFfLiiZLOXzENhqtGVNVJs7VqO1pRlCXZt15-RmdproDTrUDm9o1iBhj1yWQ63J9Ep-dp9U1lpg5jZ-4uU9_ttol3d6zFiSoAGRHW1YrcL0TKb0LTB-1ggebSbMwUCWYlmuBRij0KvpGP3F6seXC5Nw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/teacher/evaluations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"teacher",
+						"evaluations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Evaluations Detail",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiVF9mZEBnbWFpbC5jb20iLCJleHAiOjE3MjYyNjQ0NzAsImlhdCI6MTcyNjI2MDg3MCwic2NvcGUiOiJST0xFX1RFQUNIRVIifQ.BoDu3B8Z5SQ_Ny1A72QI_Ks8emoghgxNKBK99KLioWzN7expMb2ktj96y9Cgw90wV7yKVYj-9cNEZHULHTiX8xvzqa70CSXFqkPBCJ6K0epZ_7IqayW02GuZnQ8n46a_73PXQcv84xjrrdw-LpF7QJXP3yrhkVvAuCdZlFLuk0T242N32HRyKlU8EWnHvQYGFfLiiZLOXzENhqtGVNVJs7VqO1pRlCXZt15-RmdproDTrUDm9o1iBhj1yWQ63J9Ep-dp9U1lpg5jZ-4uU9_ttol3d6zFiSoAGRHW1YrcL0TKb0LTB-1ggebSbMwUCWYlmuBRij0KvpGP3F6seXC5Nw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/teacher/evaluations/b5b71332-d687-4ed9-97f1-9193468353e5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"teacher",
+						"evaluations",
+						"b5b71332-d687-4ed9-97f1-9193468353e5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Session Evaluations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiVF9mZEBnbWFpbC5jb20iLCJleHAiOjE3MjYyMzQ4OTgsImlhdCI6MTcyNjIzMTI5OCwic2NvcGUiOiJST0xFX1RFQUNIRVIifQ.jtFidIv0ns7vzB3yws6HQckso-S2OGejLpLDVq37quiB_-G66pTZXKSB896EoJ1SrCcgHQ_fXqJWE8ryfVXa4u2sI9W42yS7zDrtXgqIxGehyGA7O1X-dp4lkcgNmJvCibKmVN2G8Dde2xekc7q-4SJhXfYRiu5k3BaX4VoTyTZebMvGzjkGRBJM1PcqqC_kxKW1pPC-fc_USGiNvZxMiKPonx2XQKCZK1UfAWVHWJD5Z6XTSBkycCVc2bHcgHr-MSl8UoUb9JDU4v0-UA9pgFH-VgRnhSBuNaG4RghtHpShXbtVECD0dyOlpBkGbghlz1M_zE3xHVFVYiCWFMGgIQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/teacher/sessions/81f0cf5a-90e1-4141-9d1f-670f143d2a38",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"teacher",
+						"sessions",
+						"81f0cf5a-90e1-4141-9d1f-670f143d2a38"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Classrooms",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiVF9mZEBnbWFpbC5jb20iLCJleHAiOjE3MjYwOTQ3MzcsImlhdCI6MTcyNjA5MTEzNywic2NvcGUiOiJST0xFX1RFQUNIRVIifQ.Jmz0kadHMimsl-sLlduS8XzRObBd95ARDcsjXpPj-mLKjSaeAod9o1Zeti_5kbuu95SBKHhhOqQVNOXtvwyEd8_DIQTMSwPWIuRSDglpt0lsFCwI3y5r5iRA4Sv-ePDk-qnuZILFFVANCI8ntrDwRiLtSszRuZpRrGBe97UiKFLwMlKswbBSZtkaTjnrKnLndvWm7dW_z0JiI6-OuP9jip7tYeCZtPceVf5v3FCjDDQ4_lDgy63gTG4pGVsrfqLxbwTQ1wWrrzlGmBUB3JOuEYfHzaoU0Pl4cpKl9lYb81EFmzPXRi_0WurDmJJT-SLt5Gb0cBrKcwqq9VjlHQSVhA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/teacher/classrooms",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"teacher",
+						"classrooms"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
